@@ -18,11 +18,11 @@ The data used in this lab is New York City taxi data. To import it into your Azu
 
 * **Azure Data Factory**: If you have not created a data factory, see how to [create a data factory](https://docs.microsoft.com/azure/data-factory/quickstart-create-data-factory-portal).
 
-## Set up Azure Data Factory environment
+## Set up your Azure Data Factory environment
 
 In this section, you will learn how to access the Azure Data Factory user experience (ADF UX) from the Azure portal. Once in the ADF UX, you will configure three linked service for each of the data stores we are using: Azure SQL DB, ADLS Gen2, and Azure SQL DW. In Azure Data Factory, linked services define the connection information to external resources. Azure Data Factory currently supports over 85 connectors.
 
-### Opening the Azure Data Factory UX
+### Open the Azure Data Factory UX
 
 1. Open the [Azure portal](https://portal.azure.com) in either Microsoft Edge or Google Chrome.
 1. Using the search bar at the top of the page, search for 'Data Factories'
@@ -36,9 +36,10 @@ In this section, you will learn how to access the Azure Data Factory user experi
     ![Portal](./assets/images/portal3.png)
 1. You will be redirected to the homepage of the ADF UX. This page contains quick-starts, instructional videos and links to tutorials to learn data factory concepts. To start authoring, click on the pencil icon in left side-bar.
 
+    ![Portal](./assets/images/configure1.png)
+
 ### Create an Azure SQL database linked service
 
-    ![Portal](./assets/images/configure1.png)
 1. The authoring page is where you create data factory resources such as pipelines, datasets, data flows, triggers and linked services. To create a linked service, click on the **Connections** button in the bottom-right corner.
 
     ![Portal](./assets/images/configure2.png)
@@ -51,6 +52,7 @@ In this section, you will learn how to access the Azure Data Factory user experi
 1. In the SQL DB configuration pane, enter 'SQLDB' as your linked service name. Enter in your credentials to allow data factory to connect to your database. If you're using SQL authentication, enter in the server name, the database, your user name and password. You can verify your connection information is correct by clicking **Test connection**. Click **Create** when finished.
 
     ![Portal](./assets/images/configure5.png)
+
 ### Create an Azure SQL data warehouse linked service
 
 1. Repeat the same process to add an Azure SQL DW linked service. In the connections tab, click **New**. Select the **Azure SQL Data Warehouse** tile and click continue.
@@ -59,15 +61,19 @@ In this section, you will learn how to access the Azure Data Factory user experi
 1. In the linked service configuration pane, enter 'SQLDW' as your linked service name. Enter in your credentials to allow data factory to connect to your database. If you're using SQL authentication, enter in the server name, the database, your user name and password. You can verify your connection information is correct by clicking **Test connection**. Click **Create** when finished.
 
     ![Portal](./assets/images/configure7.png)
-### Create an Azure Data Lake Gen2 linked service
+
+### Create an Azure Data Lake Storage Gen2 linked service
 
 1. The last linked service needed for this lab is an Azure Data Lake Storage gen2.  In the connections tab, click **New**. Select the **Azure Data Lake Storage Gen2** tile and click continue.
 
     ![Portal](./assets/images/configure8.png)
-1. 
+1. In the linked service configuration pane, enter 'ADLSGen2' as your linked service name. If you're using Account key authentication, select your adls gen2 storage account from the **Storage account name** dropdown. You can verify your connection information is correct by clicking **Test connection**. Click **Create** when finished.
+
+Now that you have configured all three of your linked services, you're ready to author your pipelines, datasets, and data flows.
 
 ## Ingest data from SQL DB to ADLS
 
+In this section, you will create a pipeline with a copy activity that ingests data from a Azure SQL DB into an ADLS gen2 storage account. You will learn how to add a pipeline, configure a dataset and debug a pipeline via the ADF UX.
 
 
 ## Transform data from ADLS into SQL DW
