@@ -22,6 +22,8 @@ The data used in this lab is New York City taxi data. To import it into your Azu
 
 In this section, you will learn how to access the Azure Data Factory user experience (ADF UX) from the Azure portal. Once in the ADF UX, you will configure three linked service for each of the data stores we are using: Azure SQL DB, ADLS Gen2, and Azure SQL DW. In Azure Data Factory, linked services define the connection information to external resources. Azure Data Factory currently supports over 85 connectors.
 
+### Opening the Azure Data Factory UX
+
 1. Open the [Azure portal](https://portal.azure.com) in either Microsoft Edge or Google Chrome.
 1. Using the search bar at the top of the page, search for 'Data Factories'
 
@@ -33,6 +35,8 @@ In this section, you will learn how to access the Azure Data Factory user experi
 
     ![Portal](./assets/images/portal3.png)
 1. You will be redirected to the homepage of the ADF UX. This page contains quick-starts, instructional videos and links to tutorials to learn data factory concepts. To start authoring, click on the pencil icon in left side-bar.
+
+### Create an Azure SQL database linked service
 
     ![Portal](./assets/images/configure1.png)
 1. The authoring page is where you create data factory resources such as pipelines, datasets, data flows, triggers and linked services. To create a linked service, click on the **Connections** button in the bottom-right corner.
@@ -47,6 +51,20 @@ In this section, you will learn how to access the Azure Data Factory user experi
 1. In the SQL DB configuration pane, enter 'SQLDB' as your linked service name. Enter in your credentials to allow data factory to connect to your database. If you're using SQL authentication, enter in the server name, the database, your user name and password. You can verify your connection information is correct by clicking **Test connection**. Click **Create** when finished.
 
     ![Portal](./assets/images/configure5.png)
+### Create an Azure SQL data warehouse linked service
+
+1. Repeat the same process to add an Azure SQL DW linked service. In the connections tab, click **New**. Select the **Azure SQL Data Warehouse** tile and click continue.
+
+    ![Portal](./assets/images/configure6.png)
+1. In the linked service configuration pane, enter 'SQLDW' as your linked service name. Enter in your credentials to allow data factory to connect to your database. If you're using SQL authentication, enter in the server name, the database, your user name and password. You can verify your connection information is correct by clicking **Test connection**. Click **Create** when finished.
+
+    ![Portal](./assets/images/configure7.png)
+### Create an Azure Data Lake Gen2 linked service
+
+1. The last linked service needed for this lab is an Azure Data Lake Storage gen2.  In the connections tab, click **New**. Select the **Azure Data Lake Storage Gen2** tile and click continue.
+
+    ![Portal](./assets/images/configure8.png)
+1. 
 
 ## Ingest data from SQL DB to ADLS
 
