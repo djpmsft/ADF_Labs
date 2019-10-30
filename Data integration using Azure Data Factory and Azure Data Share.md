@@ -20,7 +20,9 @@ The data used in this lab is New York City taxi data. To import it into your Azu
 
 ## Set up your Azure Data Factory environment
 
-In this section, you will learn how to access the Azure Data Factory user experience (ADF UX) from the Azure portal. Once in the ADF UX, you will configure three linked service for each of the data stores we are using: Azure SQL DB, ADLS Gen2, and Azure SQL DW. In Azure Data Factory, linked services define the connection information to external resources. Azure Data Factory currently supports over 85 connectors.
+In this section, you will learn how to access the Azure Data Factory user experience (ADF UX) from the Azure portal. Once in the ADF UX, you will configure three linked service for each of the data stores we are using: Azure SQL DB, ADLS Gen2, and Azure SQL DW.
+
+In Azure Data Factory, linked services define the connection information to external resources. Azure Data Factory currently supports over 85 connectors.
 
 ### Open the Azure Data Factory UX
 
@@ -69,11 +71,62 @@ In this section, you will learn how to access the Azure Data Factory user experi
     ![Portal](./assets/images/configure8.png)
 1. In the linked service configuration pane, enter 'ADLSGen2' as your linked service name. If you're using Account key authentication, select your adls gen2 storage account from the **Storage account name** dropdown. You can verify your connection information is correct by clicking **Test connection**. Click **Create** when finished.
 
-Now that you have configured all three of your linked services, you're ready to author your pipelines, datasets, and data flows.
+    ![Portal](./assets/images/configure9.png)
 
-## Ingest data from SQL DB to ADLS
+### Turn on data flow debug mode
 
-In this section, you will create a pipeline with a copy activity that ingests data from a Azure SQL DB into an ADLS gen2 storage account. You will learn how to add a pipeline, configure a dataset and debug a pipeline via the ADF UX.
+In section *Transform data using mapping data flow*, you will be building mapping data flows. A best practice before building mapping data flows is to turn on debug mode which allows you to test transformation logic in seconds on an active spark cluster.
+
+To turn on debug, click the **Data flow debug** slider in the factory top bar. Click ok when the confirmation dialog pop-ups. The cluster will take about 5-7 minutes to start-up. Continue on to *Ingest data from Azure SQL DB into ADLS gen2 using the copy activity* while it is initializing.
+
+![Portal](./assets/images/configure10.png)
+
+## Ingest data from Azure SQL DB into ADLS gen2 using the copy activity
+
+In this section, you will create a pipeline with a copy activity that ingests one table from a Azure SQL DB into an ADLS gen2 storage account. You will learn how to add a pipeline, configure a dataset and debug a pipeline via the ADF UX. The configuration pattern used in this section can be applies to copying from a relational data store to a file-based data store.
+
+In Azure Data Factory, a pipeline is a logical grouping of activities that together perform a task. An activity defines an operation to perform on your data. A dataset points to the data you wish to use in a linked service.
+
+### Create a pipeline with a copy activity
+
+1. In the factory resources pane, click on the plus icon to open the new resource menu. Select **Pipeline**.
+
+    ![Portal](./assets/images/copy1.png)
+1. In the **General** tab of the pipeline canvas, name your pipeline something descriptive such as 'IngestAndTransformTaxiData'.
+
+    ![Portal](./assets/images/copy2.png)
+1. In the activities pane of the pipeline canvas, open the **Move and Transform** accordion and drag the **Copy data** activity onto the canvas. Give the copy activity a descriptive name such as 'IngestIntoADLS'.
+
+    ![Portal](./assets/images/copy3.png)
+
+### Configure Azure SQL DB source dataset
+
+1. Click on the **Source** tab of the copy activity. To create a new dataset, click **New**. Your source will be the table 'dbo.TripData' located in the linked service 'SQLDB' configured earlier.
+
+    ![Portal](./assets/images/copy4.png)
+1. Search for **Azure SQL Database** and click continue.
+
+    ![Portal](./assets/images/copy5.png)
+1. Call your dataset 'TripData'. Select 'SQLDB' as your linked service. Select table name 'dbo.TripData' from the table name dropdown. Import the schema **From connection/store**. Click OK when finished.
+
+    ![Portal](./assets/images/copy6.png)
+
+You have successfully created your source dataset. Make sure in the source settings, the default value **Table** is selected in the use query field.
+
+### Configure ADLS Gen 2 sink dataset
+
+1. Click on the **Sink** tab of the copy activity. To create a new dataset, click **New**.
+
+    ![Portal](./assets/images/copy7.png)
+1. Search for **Azure Data Lake Storage Gen2** and click continue.
+
+    ![Portal](./assets/images/copy8.png)
+1. In the select format pane, select **DelimitedText** as you are writing to a csv file. Click continue.
+
+    ![Portal](./assets/images/copy9.png)
+1. Name your sink dataset 'TripFaresCSV'. Select 'ADLSGen2' as your linked service. Enter where you want to write your csv file. For example, you can write your data to file `trip-fares.csv` in container `staging-container`. Set **First row as header** to true as you want your output data to have headers. Since no file exists in the destination yet, set **Import schema** to **None**. Click OK when finished.
+
+    ![Portal](./assets/images/copy10.png)
 
 
 ## Transform data from ADLS into SQL DW
