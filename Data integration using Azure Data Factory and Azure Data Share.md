@@ -244,6 +244,25 @@ The data flow created in this step inner joins the 'TripDataCSV' dataset created
 
 ### Configure you SQL DW sink
 
+1. Now that we have finished our transformation logic, we are ready to sink our data in a Azure SQL DW table. Add a sink transformation under the **Destination** section.
+
+    ![Portal](./assets/images/sink1.png)
+1. Name your sink 'SQLDWSink'. Click **New** next to the sink dataset field to create a new SQL DW dataset.
+
+    ![Portal](./assets/images/sink2.png)
+
+1. Select the **Azure SQL Data Warehouse** tile and click continue.
+
+    ![Portal](./assets/images/sink3.png)
+1. Call your dataset 'AggregatedTaxiData'. Select 'SQLDW' as your linked service. Select **Create new table** and name the new table dbo.AggregateTaxiData. Click OK when finished
+
+    ![Portal](./assets/images/sink4.png)
+1. Go to the **Settings** tab of the sink. Since we are creating a new table, we need to select **Recreate table** under table action. Unselect **Enable staging** which toggles whether we are inserting row-by-row or in batch.
+
+    ![Portal](./assets/images/sink5.png)
+
+You have successfully created your data flow. Now its time to operationalize it in a pipeline activity
+
 ### Debug your pipeline end-to-end
 
 
