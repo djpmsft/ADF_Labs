@@ -176,6 +176,8 @@ The data flow created in this step inner joins the 'TripDataCSV' dataset created
 
     ![Portal](./assets/images/dataflow7.png)
 
+*Note: Data preview does not write data.*
+
 ### Configure your trip fares SQL DB source
 
 1. The second source you're adding will point at the SQL DB table 'dbo.TripFares'. Under your 'TripDataCSV' source, there will be another **Add Source** box. Click it to add a new source transformation.
@@ -191,10 +193,54 @@ The data flow created in this step inner joins the 'TripDataCSV' dataset created
 
     ![Portal](./assets/images/dataflow11.png)
 1. To verify your data, fetch a data preview in the **Data Preview** tab.
+
+    ![Portal](./assets/images/dataflow12.png)
+
 ### Inner join TripDataCSV and TripFaresSQL
 
+1. To add a new transformation, click the plus icon in the bottom-right corner of 'TripDataCSV'. Under **Multiple inputs/outputs**, select **Join**.
+
+    ![Portal](./assets/images/join1.png)
+1. Name your join transformation 'InnerJoinWithTripFares'. Select 'TripFaresSQL' from the right stream dropdown. Select **Inner** as the join type. To learn more about the different join types in mapping data flow, see [join types](https://docs.microsoft.com/azure/data-factory/data-flow-join#join-types).
+
+    Select which columns you wish to match on from each stream via the **Join conditions** dropdown. To add an additional join condition, click on the plus icon next to an existing condition. By default, all join conditions are combined with an AND operator which means all conditions must be met for a match. In this lab, we want to match on columns `medallion`, `hack_license`, `vendor_id`, and `pickup_datetime`
+
+    ![Portal](./assets/images/join2.png)
+1. Verify you successfully joined 25 columns together with a data preview.
+
+    ![Portal](./assets/images/join3.png)
 
 ### Aggregate by payment_type
+
+1. After you complete your join transformation, add an aggregate transformation by clicking the plus icon next to 'InnerJoinWithTripFares. Choose **Aggregate** under **Schema modifier**.
+
+    ![Portal](./assets/images/agg1.png)
+1. Name your aggregate transformation 'AggregateByPaymentType'. Select `payment_type` as the group by column.
+
+    ![Portal](./assets/images/agg2.png)
+1. Go to the **Aggregates** tab. Here, you will specify two aggregations:
+    * The average fare grouped by payment type
+    * The total trip distance grouped by payment type
+
+    First, you will create the average fare expression. In the text box labeled **Add or select a column**, enter 'average_fare'.
+
+    ![Portal](./assets/images/agg3.png)
+1. To enter an aggregation expression, click the blue box labeled **Enter expression**. This will open up the data flow expression builder, a tool used to visually create data flow expressions using input schema, built-in functions and operations, and user-defined parameters. For more information on the capabilities of the expression builder, see the [expression builder documentation](https://docs.microsoft.com/azure/data-factory/concepts-data-flow-expression-builder).
+
+    To get the average fare, use the `avg()` aggregation function to aggregate the `total_amount` column cast to an integer with `toInteger()`. In the data flow expression language, this is defined as `avg(toInteger(total_amount))`. Click **Save and finish** when you are done.
+
+    ![Portal](./assets/images/agg4.png)
+1. To add an additional aggregation expression, click on the plus icon next to `average_fare`. Select **Add column**.
+
+    ![Portal](./assets/images/agg5.png)
+1. In the text box labeled **Add or select a column**, enter 'total_trip_distance'. As in the last step, open the expression builder to enter in the expression.
+
+    To get the total trip distance, use the `sum()` aggregation function to aggregate the `trip_distance` column cast to an integer with `toInteger()`. In the data flow expression language, this is defined as `sum(toInteger(trip_distance))`. Click **Save and finish** when you are done.
+
+    ![Portal](./assets/images/agg6.png)
+1. Test your transformation logic in the **Data Preview** tab. As you can see, there are significantly less rows and columns than previously. Only the three group by and aggregation columns defined in this transformation continue downstream. As there are only five payment type groups in the sample, only five rows are outputted.
+
+    ![Portal](./assets/images/agg7.png)
 
 ### Configure you SQL DW sink
 
