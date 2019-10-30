@@ -159,17 +159,40 @@ The data flow created in this step inner joins the 'TripDataCSV' dataset created
     ![Portal](./assets/images/dataflow2.png)
 1. You'll be directed to the data flow canvas where you will be building your transformation logic. In the general tab, name your data flow 'JoinAndAggregateData'.
 
+    ![Portal](./assets/images/dataflow3.png)
+
 ### Configure your trip data csv source
 
 1. The first thing you want to do is configure your two source transformations. The first source will point to the 'TripDataCSV' DelimitedText dataset. To add a source transformation, click on the **Add Source** box in the canvas.
+
+    ![Portal](./assets/images/dataflow4.png)
 1. Name your source 'TripDataCSV' and select the 'TripDataCSV' dataset from the source drop-down. If you remember, you didn't import a schema initially when creating this dataset as there was no data there. Since `trip-data.csv` exists now, click **Edit** to go to the dataset settings tab.
+
+    ![Portal](./assets/images/dataflow5.png)
 1. Go to tab **Schema** and click **Import schema**. Select **From connection/store** to import directly from the file store. Fourteen columns of type string should appear.
+
+    ![Portal](./assets/images/dataflow6.png)
 1. Go back to data flow 'JoinAndAggregateData'. If your debug cluster has started (indicated by a green circle next to the debug slider), you can get a snapshot of the data in the **Data Preview** tab. Click **Refresh** to fetch a data preview.
+
+    ![Portal](./assets/images/dataflow7.png)
 
 ### Configure your trip fares SQL DB source
 
+1. The second source you're adding will point at the SQL DB table 'dbo.TripFares'. Under your 'TripDataCSV' source, there will be another **Add Source** box. Click it to add a new source transformation.
 
+    ![Portal](./assets/images/dataflow8.png)
+1. Name this source 'TripFaresSQL'. Click **New** next to the source dataset field to create a new SQL DB dataset.
+
+    ![Portal](./assets/images/dataflow9.png)
+1. Select the **Azure SQL Database** tile and click continue. *Note: You may notice many of the connectors in data factory are not supported in mapping data flow. To transform data from one of these sources, ingest it into a supported source using the copy activity*.
+
+    ![Portal](./assets/images/dataflow10.png)
+1. Call your dataset 'TripFares'. Select 'SQLDB' as your linked service. Select table name 'dbo.TripFares' from the table name dropdown. Import the schema **From connection/store**. Click OK when finished.
+
+    ![Portal](./assets/images/dataflow11.png)
+1. To verify your data, fetch a data preview in the **Data Preview** tab.
 ### Inner join TripDataCSV and TripFaresSQL
+
 
 ### Aggregate by payment_type
 
