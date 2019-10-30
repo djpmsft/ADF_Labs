@@ -261,9 +261,26 @@ The data flow created in this step inner joins the 'TripDataCSV' dataset created
 
     ![Portal](./assets/images/sink5.png)
 
-You have successfully created your data flow. Now its time to operationalize it in a pipeline activity
+You have successfully created your data flow. Now its time to operationalize it in a pipeline activity.
 
 ### Debug your pipeline end-to-end
 
+1. Go back to the tab for the **IngestAndTransformData** pipeline. Notice the green box on the 'IngestIntoADLS' copy activity. Drag it over to the 'JoinAndAggregateData' data flow activity. This creates an 'on success' which causes the data flow activity to only run if the copy is successful.
 
+    ![Portal](./assets/images/pipeline1.png)
+1. As we did for the copy actiivty, click **Debug** to execute a debug run. For debug runs, the data flow activity will use the active debug cluster instead of spinning up a new cluster. This pipeline will take a little over a minute to execute.
+
+    ![Portal](./assets/images/pipeline2.png)
+1. Like the copy activity, the data flow has a special monitoring view accessed by the eyeglasses icon on completion of the activity.
+
+    ![Portal](./assets/images/pipeline3.png)
+1. In the monitoring view, you can see a simplified data flow graph along with the execution times and rows at each execution stage. If done correctly, you should have aggregated 49,999 rows into 5 rows in this activity.
+
+    ![Portal](./assets/images/pipeline4.png)
+1. You can click a transformation to get additional details on its execution such as partitioning information and new/updated/dropped columns.
+
+    ![Portal](./assets/images/pipeline5.png)
+
+You have now completed the data factory portion of this lab. Publish your resources if you wish to operationalize them with triggers. You successfully ran a pipline that ingested data from Azure SQL Database to Azure Data Lake Storage using the copy activity and then aggregated that data into an Azure SQL Data warehouse.
+ 
 ## Share data
