@@ -124,10 +124,25 @@ You have successfully created your source dataset. Make sure in the source setti
 1. In the select format pane, select **DelimitedText** as you are writing to a csv file. Click continue.
 
     ![Portal](./assets/images/copy9.png)
-1. Name your sink dataset 'TripFaresCSV'. Select 'ADLSGen2' as your linked service. Enter where you want to write your csv file. For example, you can write your data to file `trip-fares.csv` in container `staging-container`. Set **First row as header** to true as you want your output data to have headers. Since no file exists in the destination yet, set **Import schema** to **None**. Click OK when finished.
+1. Name your sink dataset 'TripDataCSV'. Select 'ADLSGen2' as your linked service. Enter where you want to write your csv file. For example, you can write your data to file `trip-data.csv` in container `staging-container`. Set **First row as header** to true as you want your output data to have headers. Since no file exists in the destination yet, set **Import schema** to **None**. Click OK when finished.
 
     ![Portal](./assets/images/copy10.png)
 
-## Transform data from ADLS into SQL DW
+### Test the copy activity with a pipeline debug run
+
+1. To verify your copy activity is working correctly, click **Debug** at the top of the pipeline canvas to execute a debug run. A debug run allows you to test your pipeline either end-to-end or until a breakpoint before publishing it to the data factory service.
+
+    ![Portal](./assets/images/copy11.png)
+1. To monitor your debug run, go to the **Output** tab of the pipeline canvas. The monitoring screen will auto-refresh every 20 seconds or when you manually click the refresh button. The copy activity has a special monitoring view which can be access by clicking the eye-glasses icon in the **Actions** column.
+
+    ![Portal](./assets/images/copy12.png)
+1. The copy monitoring view gives the activity's execution details and performance characteristics. You can see information such as data read/written, rows read/written, files read/written, and throughput. If you have configured everything, you should see 49,999 rows written into one file in your ADLS sink.
+
+    ![Portal](./assets/images/copy13.png)
+1. Before moving on to the next section, its suggested that you publish your changes to the data factory service by clicking **Publish** in the factory top bar. While it is not covered in this lab, Azure Data Factory supports full git integration. For more information, see [source control in Azure Data Factory](https://docs.microsoft.com/azure/data-factory/source-control#troubleshooting-git-integration).
+
+    ![Portal](./assets/images/publish1.png)
+    
+## Transform data using mapping data flow
 
 ## Share data
