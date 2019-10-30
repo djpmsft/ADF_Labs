@@ -136,13 +136,46 @@ You have successfully created your source dataset. Make sure in the source setti
 1. To monitor your debug run, go to the **Output** tab of the pipeline canvas. The monitoring screen will auto-refresh every 20 seconds or when you manually click the refresh button. The copy activity has a special monitoring view which can be access by clicking the eye-glasses icon in the **Actions** column.
 
     ![Portal](./assets/images/copy12.png)
-1. The copy monitoring view gives the activity's execution details and performance characteristics. You can see information such as data read/written, rows read/written, files read/written, and throughput. If you have configured everything, you should see 49,999 rows written into one file in your ADLS sink.
+1. The copy monitoring view gives the activity's execution details and performance characteristics. You can see information such as data read/written, rows read/written, files read/written, and throughput. If you have configured everything correctly, you should see 49,999 rows written into one file in your ADLS sink.
 
     ![Portal](./assets/images/copy13.png)
-1. Before moving on to the next section, its suggested that you publish your changes to the data factory service by clicking **Publish** in the factory top bar. While it is not covered in this lab, Azure Data Factory supports full git integration. For more information, see [source control in Azure Data Factory](https://docs.microsoft.com/azure/data-factory/source-control#troubleshooting-git-integration).
+1. Before moving on to the next section, its suggested that you publish your changes to the data factory service by clicking **Publish all** in the factory top bar. While not covered in this lab, Azure Data Factory supports full git integration. Git integration allows for version control, iterative saving in a repository, and collaboration on a data factory. For more information, see [source control in Azure Data Factory](https://docs.microsoft.com/azure/data-factory/source-control#troubleshooting-git-integration).
 
     ![Portal](./assets/images/publish1.png)
-    
+
 ## Transform data using mapping data flow
+
+Now that you have successfully copied data into Azure Data Lake Storage, it is time to join and aggregate that data into a data warehouse. We will use mapping data flow, Azure Data Factory's visually designed transformation service. Mapping data flows allow users to develop transformation logic code-free and execute them on spark clusters managed by the ADF service.
+
+The data flow created in this step inner joins the 'TripDataCSV' dataset created in the previous section with a table 'dbo.TripFares' stored in 'SQLDB' based on four key columns. Then the data gets aggregated based upon column `payment_type` to calculate the average of certain fields and written in a SQL Data Warehouse table.
+
+### Add a data flow activity to your pipeline
+
+1. In the activities pane of the pipeline canvas, open the **Move and Transform** accordion and drag the **Data flow** activity onto the canvas.
+
+    ![Portal](./assets/images/dataflow1.png)
+1. In the side pane that opens, select **Create new data flow** and choose **Mapping data flow**. Click **OK**.
+
+    ![Portal](./assets/images/dataflow2.png)
+1. You'll be directed to the data flow canvas where you will be building your transformation logic. In the general tab, name your data flow 'JoinAndAggregateData'.
+
+### Configure your trip data csv source
+
+1. The first thing you want to do is configure your two source transformations. The first source will point to the 'TripDataCSV' DelimitedText dataset. To add a source transformation, click on the **Add Source** box in the canvas.
+1. Name your source 'TripDataCSV' and select the 'TripDataCSV' dataset from the source drop-down. If you remember, you didn't import a schema initially when creating this dataset as there was no data there. Since `trip-data.csv` exists now, click **Edit** to go to the dataset settings tab.
+1. Go to tab **Schema** and click **Import schema**. Select **From connection/store** to import directly from the file store. Fourteen columns of type string should appear.
+1. Go back to data flow 'JoinAndAggregateData'. If your debug cluster has started (indicated by a green circle next to the debug slider), you can get a snapshot of the data in the **Data Preview** tab. Click **Refresh** to fetch a data preview.
+
+### Configure your trip fares SQL DB source
+
+
+### Inner join TripDataCSV and TripFaresSQL
+
+### Aggregate by payment_type
+
+### Configure you SQL DW sink
+
+### Debug your pipeline end-to-end
+
 
 ## Share data
