@@ -128,7 +128,6 @@ You have successfully created your source dataset. Make sure in the source setti
 
     ![Portal](./assets/images/copy10.png)
 
-
 ## Transform data from ADLS into SQL DW
 
 ## Share data
