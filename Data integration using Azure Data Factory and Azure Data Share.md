@@ -297,13 +297,13 @@ Once you have created a data share, you will then switch hats and become the *da
 
 1. Using the search bar at the top of the page, search for **Data Shares**
 
-![Portal](./assets/images/portal-ads.png)
+    ![Portal](./assets/images/portal-ads.png)
 
 1. Select the data share account with 'Provider' in the name. For example, **DataProvider0102**. 
 
 1. Select **Start sharing your data**
 
-![Start sharing](./assets/images/ads-start-sharing.png)
+    ![Start sharing](./assets/images/ads-start-sharing.png)
 
 1. Select **+Create** to start configuring your new data share. 
 
@@ -313,27 +313,27 @@ Once you have created a data share, you will then switch hats and become the *da
 
 1. Under **Terms of use**, specify a set of terms that you would like your data consumer to adhere to. Some examples include "Do not distribute this data outside your organization" or "Refer to legal agreement". 
 
-![Share details](./assets/images/ads-details.png)
+    ![Share details](./assets/images/ads-details.png)
 
 1. Select **Continue**. 
 
 1. Select **Add datasets** 
 
-![Add dataset](./assets/images/add-dataset.png)
+    ![Add dataset](./assets/images/add-dataset.png)
 
 1. Select **Azure SQL Data Warehouse** to select a table from the Azure SQL Data Warehouse that your ADF transformations landed in. 
 
-![Add dataset](./assets/images/add-dataset-sql.png)
+    ![Add dataset](./assets/images/add-dataset-sql.png)
 
 1. Select **EDW** for the SQL Data Warehouse, and select **AggregatedTaxiData** for the table. 
 
 1. Select **Add dataset**
 
-We now have a SQL table that is part of our dataset. Next, we will add additional datasets from Azure Data Lake Store. 
+    We now have a SQL table that is part of our dataset. Next, we will add additional datasets from Azure Data Lake Store. 
 
 1. Select **Add dataset** and select **Azure Data Lake Store Gen2**
 
-![Add dataset](./assets/images/add-dataset-adls.png)
+    ![Add dataset](./assets/images/add-dataset-adls.png)
 
 1. Select **Next**
 
@@ -341,17 +341,20 @@ We now have a SQL table that is part of our dataset. Next, we will add additiona
 
 1. Select the *Boston Taxi Data* folder to add the entire folder to your data share. 
 
-1. Select **Add datasets*
+1. Select **Add datasets**
 
 1. Review the datasets that have been added. You should a SQL table and an ADLSGen2 folder added to your data share. 
 
 1. Select **Continue**
 
-1. In this screen, you can add recipients to your data share. The recipients you add will receive invitations to your data share. For the purpose of this lab, add an e-mail address that you have access to in this lab through a web based email client such as outlook or gmail. You will need to access the invitation when you switch to the consumer flow later in the lab. 
+1. In this screen, you can add recipients to your data share. The recipients you add will receive invitations to your data share. For the purpose of this lab, you must add in two e-mail addresses:
 
-![Add recipients](./assets/images/add-recipients.png)
+    1. An e-mail address that you have access to in this lab through a web based email client such as outlook or gmail. You will need to access the invitation when you switch to the consumer flow later in the lab.
+    1. The e-mail address of the Azure subscription you are in. This can be found in the top right hand corner of the Azure portal.  
 
-Additionally, add in the fictional data consumer named *janedoe@fabrikam.com*.
+    ![Add recipients](./assets/images/add-recipients.png)
+
+    1. Add in the fictional data consumer named *janedoe@fabrikam.com*.
 
 1. In this screen, you can configure a Snapshot Setting for your data consumer. This will allow them to receive regular updates of your data at an interval defined by you. 
 
@@ -359,7 +362,7 @@ Additionally, add in the fictional data consumer named *janedoe@fabrikam.com*.
 
 1. Select **Create**.
 
-You now have an active data share. Lets review what you can see a a data provider when you create a data share. 
+    You now have an active data share. Lets review what you can see as a data provider when you create a data share. 
 
 1. Select the data share that you just created, titled **DataProvider**. You can navigate to it by selecting **Sent Shares** in **Data Share**. 
 
@@ -376,6 +379,8 @@ You now have an active data share. Lets review what you can see a a data provide
 1. Select the invitation to *janedoe@fabrikam.com*. Select Delete. If your recipient has not yet accepted the invitation, they will no longer be able to do so. 
 
 1. Select the **History** tab. Note that nothing is displayed as yet because your data consumer has not yet accepted your invitaiton and triggered a snapshot. 
+
+## Receiving data shared using Azure Data Share
 
 Now that we have reviewed our data share, we are ready to switch context and wear our data consumer hat. 
 
@@ -399,13 +404,13 @@ You may be prompted to select a subscription. Make sure you select the subscript
 
 1. Select **Accept and configure later**. 
 
-In configuring this option, a share subscription is created but there is nowhere for the data to land since no destination has been mapped. 
+    In configuring this option, a share subscription is created but there is nowhere for the data to land since no destination has been mapped. 
 
-Next, we will configure dataset mappings for the data share. 
+    Next, we will configure dataset mappings for the data share. 
 
 1. Select the Received Share (the name you specified in step 5).
 
-Note that **Trigger snapshot** is greyed out but the share is Active. 
+    Note that **Trigger snapshot** is greyed out but the share is Active. 
 
 1. Select the **Datasets** tab. Notice that each dataset is Unmapped, which means that it has no destination. 
 
@@ -413,13 +418,13 @@ Note that **Trigger snapshot** is greyed out but the share is Active.
 
 1. On the right hand side of the screen, select the **Target Data Type** drop down. 
 
-Note that you can map the SQL data to a wide range of data stores. In this case, we'll be mapping to an Azure SQL Database.
-
-(Optional) Select **Azure Data Lake Store Gen2** as the target data type. 
-
-(Optional) Select the Subscription, Resource Group and Storage account you have been working in. 
-
-(Optional) Note that you can choose to receive the data into your data lake in either csv or parquet format. 
+    Note that you can map the SQL data to a wide range of data stores. In this case, we'll be mapping to an Azure SQL Database.
+    
+    (Optional) Select **Azure Data Lake Store Gen2** as the target data type. 
+    
+    (Optional) Select the Subscription, Resource Group and Storage account you have been working in. 
+    
+    (Optional) Note that you can choose to receive the data into your data lake in either csv or parquet format. 
 
 1. Next to **Target data type**, select Azure SQL Database. 
 
@@ -439,25 +444,25 @@ Note that you can map the SQL data to a wide range of data stores. In this case,
 
 1. Run the query provided in your data share. 
 
-This command allows the Azure Data Share service to use Managed Identites for Azure Services to authenticate to the SQL Server to be able to copy data into it. 
+    This command allows the Azure Data Share service to use Managed Identites for Azure Services to authenticate to the SQL Server to be able to copy data into it. 
 
 1. Go back to the original tab, and select **Map to target**.
 
 1. Next, select the Azure Data Lake Gen2 folder that is part of the dataset and map to an existing storage account. 
 
-With all datasets mapped, you are now ready to start receiving data from the data provider. 
-
+    With all datasets mapped, you are now ready to start receiving data from the data provider. 
+    
 1. Select **Details**. 
 
-Notice that **Trigger snapshot** is no longer greyed out, since the data share now has destinations to copy into.
+    Notice that **Trigger snapshot** is no longer greyed out, since the data share now has destinations to copy into.
 
 1. Select Trigger snapshot -> Full Copy. 
 
-This will start copying data into your new data share account. In a real world scenario, this data would be coming from a third party. 
+    This will start copying data into your new data share account. In a real world scenario, this data would be coming from a third party. 
 
-It will take approximately 3-5 minutes for the data to come across. You can monitor progress by clicking on the **History** tab. 
+    It will take approximately 3-5 minutes for the data to come across. You can monitor progress by clicking on the **History** tab. 
 
-While you wait, navigate to the original data share (DataProvider) and view the status of the **Share Subscriptions** and **History** tab. Notice that there is now an active subscription, and as a data provider, you can also monitor when the data consumer has started to receive the data shared with them. 
+    While you wait, navigate to the original data share (DataProvider) and view the status of the **Share Subscriptions** and **History** tab. Notice that there is now an active subscription, and as a data provider, you can also monitor when the data consumer has started to receive the data shared with them. 
 
 1. Navigate back to the Data consumer's data share. Once the status of the trigger is successful, navigate to the destination SQL database and data lake to see that the data has landed in the respective stores. 
 
