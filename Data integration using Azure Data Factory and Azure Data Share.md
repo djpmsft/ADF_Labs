@@ -429,7 +429,7 @@ Note that you can map the SQL data to a wide range of data stores. In this case,
 
 1. Open a new Azure portal tab. Do not close your existing tab as you will need to come back to it in a moment. 
 
-1. In the new tab you opened, navigate to **SQL databases*.
+1. In the new tab you opened, navigate to **SQL databases**.
 
 1. Select the SQL database (there should only be one in your subscription). Be careful not to select the SQL Data Warehouse. 
 
@@ -455,7 +455,13 @@ Notice that **Trigger snapshot** is no longer greyed out, since the data share n
 
 This will start copying data into your new data share account. In a real world scenario, this data would be coming from a third party. 
 
+It will take approximately 3-5 minutes for the data to come across. You can monitor progress by clicking on the **History** tab. 
 
+While you wait, navigate to the original data share (DataProvider) and view the status of the **Share Subscriptions** and **History** tab. Notice that there is now an active subscription, and as a data provider, you can also monitor when the data consumer has started to receive the data shared with them. 
+
+1. Navigate back to the Data consumer's data share. Once the status of the trigger is successful, navigate to the destination SQL database and data lake to see that the data has landed in the respective stores. 
+
+Congratulations, you have reached the end of the lab. 
 
 
 
