@@ -285,13 +285,13 @@ You have successfully created your data flow. Now its time to run it in a pipeli
 
 You have now completed the data factory portion of this lab. Publish your resources if you wish to operationalize them with triggers. You successfully ran a pipeline that ingested data from Azure SQL Database to Azure Data Lake Storage using the copy activity and then aggregated that data into an Azure SQL Data warehouse. You can verify the data was successfully written by looking at the SQL Server itself.
 
-## Share data
+## Share data using Azure Data Share
 
 In this section, you will learn how to set up a new data share using the Azure portal. This will involve creating a new data share which will contain datasets from Azure Data Lake Store Gen2 and Azure SQL Data Warehouse. You will then configure a snapshot schedule, which will give the data consumers an option to automatically refresh the data being shared with them. Then, you will invite recipients to your data share. 
 
 Once you have created a data share, you will then switch hats and become the *data consumer*. As the data consumer, you will walk through the flow of accepting a data share invitation, configuring where you'd like the data to be received and mapping datasets to different storage locations. Then, you will trigger a snapshot which will copy the data shared with you into the destination specified. 
 
-### Create a data share
+### Sharing data (Data Provider flow)
 
 1. Open the Azure portal in either Microsoft Edge or Google Chrome.
 
@@ -347,12 +347,12 @@ Once you have created a data share, you will then switch hats and become the *da
 
 1. Select **Continue**
 
-1. In this screen, you can add recipients to your data share. The recipients you add will receive invitations to your data share. For the purpose of this lab, you must add in two e-mail addresses:
+1. In this screen, you can add recipients to your data share. The recipients you add will receive invitations to your data share. For the purpose of this lab, you must add in 3 e-mail addresses:
 
     1. An e-mail address that you have access to in this lab through a web based email client such as outlook or gmail. You will need to access the invitation when you switch to the consumer flow later in the lab.
     1. The e-mail address of the Azure subscription you are in. This can be found in the top right hand corner of the Azure portal.  
 
-    ![Add recipients](./assets/images/add-recipients.png)
+        ![Add recipients](./assets/images/add-recipients.png)
 
     1. Add in the fictional data consumer named *janedoe@fabrikam.com*.
 
@@ -380,7 +380,7 @@ Once you have created a data share, you will then switch hats and become the *da
 
 1. Select the **History** tab. Note that nothing is displayed as yet because your data consumer has not yet accepted your invitaiton and triggered a snapshot. 
 
-## Receiving data shared using Azure Data Share
+### Receiving data (Data consumer flow)
 
 Now that we have reviewed our data share, we are ready to switch context and wear our data consumer hat. 
 
