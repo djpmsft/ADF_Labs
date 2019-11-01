@@ -324,6 +324,19 @@ Once you have created a data share, you will then switch hats and become the *da
 1. Select **Azure SQL Data Warehouse** to select a table from the Azure SQL Data Warehouse that your ADF transformations landed in. 
 
     ![Add dataset](./assets/images/add-dataset-sql.png)
+    
+1. You will be given a script to run before you can proceed. The script provided creates a user in the SQL database to allow the Azure Data Share MSI to authenticate on it's behalf. 
+
+    IMPORTANT: Before running the script, you must set yourself as the Active Directory Admin for the SQL Server. 
+
+1. Open a new tab and navigate to the Azure portal. Copy the script provided to create a user in the database that you want to share data from. You must do this by logging into the EDW database using Query Explorer (preview) using AAD authentication. 
+
+    You will need to modify the script so that the user created is contained within brackets. Eg:
+    
+    create user [dataprovider-xxxx] from external login; 
+    exec sp_addrolemember db_owner, [dataprovider-xxxx];
+    
+1. Switch back to Azure Data Share where you were adding datasets to your data share. 
 
 1. Select **EDW** for the SQL Data Warehouse, and select **AggregatedTaxiData** for the table. 
 
@@ -343,14 +356,13 @@ Once you have created a data share, you will then switch hats and become the *da
 
 1. Select **Add datasets**
 
-1. Review the datasets that have been added. You should a SQL table and an ADLSGen2 folder added to your data share. 
+1. Review the datasets that have been added. You should have a SQL table and an ADLSGen2 folder added to your data share. 
 
 1. Select **Continue**
 
-1. In this screen, you can add recipients to your data share. The recipients you add will receive invitations to your data share. For the purpose of this lab, you must add in 3 e-mail addresses:
+1. In this screen, you can add recipients to your data share. The recipients you add will receive invitations to your data share. For the purpose of this lab, you must add in 2 e-mail addresses:
 
-    1. An e-mail address that you have access to in this lab through a web based email client such as outlook or gmail. You will need to access the invitation when you switch to the consumer flow later in the lab.
-    1. The e-mail address of the Azure subscription you are in. This can be found in the top right hand corner of the Azure portal.  
+    1. The e-mail address of the Azure subscription you are in. 
 
         ![Add recipients](./assets/images/add-recipients.png)
 
