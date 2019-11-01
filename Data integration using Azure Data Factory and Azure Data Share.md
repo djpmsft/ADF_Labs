@@ -396,9 +396,9 @@ Once you have created a data share, you will then switch hats and become the *da
 
 Now that we have reviewed our data share, we are ready to switch context and wear our data consumer hat. 
 
-You should now have an Azure Data Share invitation in your inbox from Microsoft Azure. Open the invitation and review the information. 
+You should now have an Azure Data Share invitation in your inbox from Microsoft Azure. Launch Outlook Web Access and log in using the credentials supplied for your Azure subscription. 
 
-Once you are ready, click on "View invitation >". At this point, you are going to be simulating the data consumer experience when accepting a data providers invitation to their data share. 
+In the e-mail that you should have received, click on "View invitation >". At this point, you are going to be simulating the data consumer experience when accepting a data providers invitation to their data share. 
 
 You may be prompted to select a subscription. Make sure you select the subscription you have been working in for this lab. 
 
