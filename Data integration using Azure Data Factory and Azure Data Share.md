@@ -321,7 +321,7 @@ Once you have created a data share, you will then switch hats and become the *da
 
     ![Add dataset](./assets/images/add-dataset.png)
 
-1. Select **Azure SQL Data Warehouse** to select a table from the Azure SQL Data Warehouse that your ADF transformations landed in. 
+1. Select **Azure SQL Data Warehouse** to select a table from the Azure SQL Data Warehouse that your ADF transformations landed in. (Note: Azure SQL Data Warehouse is now known as Azure Synapse Analytics)
 
     ![Add dataset](./assets/images/add-dataset-sql.png)
     
@@ -386,19 +386,21 @@ Once you have created a data share, you will then switch hats and become the *da
 
 1. Navigate to the **Invitations** tab. Here, you'll see a list of pending invitation(s). 
 
-![Pending invitations](./assets/images/pending-invites.png)
+    ![Pending invitations](./assets/images/pending-invites.png)
 
 1. Select the invitation to *janedoe@fabrikam.com*. Select Delete. If your recipient has not yet accepted the invitation, they will no longer be able to do so. 
 
-1. Select the **History** tab. Note that nothing is displayed as yet because your data consumer has not yet accepted your invitaiton and triggered a snapshot. 
+1. Select the **History** tab. Note that nothing is displayed as yet because your data consumer has not yet accepted your invitation and triggered a snapshot. 
 
 ### Receiving data (Data consumer flow)
 
 Now that we have reviewed our data share, we are ready to switch context and wear our data consumer hat. 
 
-You should now have an Azure Data Share invitation in your inbox from Microsoft Azure. Launch Outlook Web Access and log in using the credentials supplied for your Azure subscription. 
+You should now have an Azure Data Share invitation in your inbox from Microsoft Azure. Launch Outlook Web Access (outlook.com) and log in using the credentials supplied for your Azure subscription.
 
 In the e-mail that you should have received, click on "View invitation >". At this point, you are going to be simulating the data consumer experience when accepting a data providers invitation to their data share. 
+
+![Email invitation](./assets/images/email-invite.png)
 
 You may be prompted to select a subscription. Make sure you select the subscription you have been working in for this lab. 
 
@@ -406,11 +408,13 @@ You may be prompted to select a subscription. Make sure you select the subscript
 
 1. In this Invitation screen, you'll notice various details about the data share that you configured earlier as a data provider. Review the details and accept the terms of use if provided.
 
-1. Under Target Data Share Account, select the Subscription and Resouce Group that already exists for your lab. 
+1. Select the Subscription and Resouce Group that already exists for your lab. 
 
-1. Next to **Data share account**, select **DataConsumer**. Note that you can also create a new data share account. 
+1. For **Data share account**, select **DataConsumer**. Note that you can also create a new data share account. 
 
 1. Next to **Received share name**, you'll notice the default share name is the name that was specified by the data provider. Give the share a friendly name that describes the data you're about to receive, e.g **TaxiDataShare**.
+
+    ![Invitation accept](./assets/images/consumer-accept.png)
 
 1. Note that you can choose to **Accept and configure now** or **Accept and configure later**. If you choose to accept and configure now, you'll specify a storage account where all data should be copied. If you choose to accept and configure later, the datasets in the share will be ummapped and you'll need to manually map them. We will opt for th later. 
 
@@ -424,13 +428,17 @@ You may be prompted to select a subscription. Make sure you select the subscript
 
     Note that **Trigger snapshot** is greyed out but the share is Active. 
 
-1. Select the **Datasets** tab. Notice that each dataset is Unmapped, which means that it has no destination. 
+1. Select the **Datasets** tab. Notice that each dataset is Unmapped, which means that it has no destination to copy data to. 
+
+    ![unmapped datasets](./assets/images/unmapped.png)
 
 1. Select the SQL Data Warehouse Table and then select **+ Map to Target**.
 
 1. On the right hand side of the screen, select the **Target Data Type** drop down. 
 
     Note that you can map the SQL data to a wide range of data stores. In this case, we'll be mapping to an Azure SQL Database.
+
+    ![mapping](./assets/images/mapping-options.png)
     
     (Optional) Select **Azure Data Lake Store Gen2** as the target data type. 
     
@@ -441,6 +449,8 @@ You may be prompted to select a subscription. Make sure you select the subscript
 1. Next to **Target data type**, select Azure SQL Database. 
 
 1. Select the Subscription, Resource Group and Storage account you have been working in. 
+
+    ![map to sql](./assets/images/map-to-sqldb.png)
 
 1. Before you can proceed, you will need to create a new user in the SQL Server by running the script provided. First, copy the script provided to your clipboard. 
 
@@ -454,21 +464,27 @@ You may be prompted to select a subscription. Make sure you select the subscript
 
 1. Use AAD authentication to log in to Query editor. 
 
-1. Run the query provided in your data share. 
+1. Run the query provided in your data share (copied to clipboard in step 14). 
 
     This command allows the Azure Data Share service to use Managed Identites for Azure Services to authenticate to the SQL Server to be able to copy data into it. 
 
 1. Go back to the original tab, and select **Map to target**.
 
-1. Next, select the Azure Data Lake Gen2 folder that is part of the dataset and map to an existing storage account. 
+1. Next, select the Azure Data Lake Gen2 folder that is part of the dataset and map it to a Azure Blob Storage account. 
+
+    ![storage](./assets/images/storage-map.png)
 
     With all datasets mapped, you are now ready to start receiving data from the data provider. 
+
+    ![mapped](./assets/images/all-mapped.png)
     
 1. Select **Details**. 
 
     Notice that **Trigger snapshot** is no longer greyed out, since the data share now has destinations to copy into.
 
 1. Select Trigger snapshot -> Full Copy. 
+
+    ![trigger](./assets/images/trigger-full.png)
 
     This will start copying data into your new data share account. In a real world scenario, this data would be coming from a third party. 
 
