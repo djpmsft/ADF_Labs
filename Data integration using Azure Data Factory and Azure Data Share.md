@@ -59,7 +59,7 @@ In Azure Data Factory, linked services define the connection information to exte
 
 ### Create an Azure Synapse Analytics linked service
 
-1. Repeat the same process to add an Azure Synapse Analytics linked service. In the connections tab, click **New**. Select the **Azure SQL Data Warehouse** tile and click continue.
+1. Repeat the same process to add an Azure Synapse Analytics linked service. In the connections tab, click **New**. Select the **Azure Synapse Analytics (formerly SQL DW)** tile and click continue.
 
     ![Portal](./assets/images/configure6.png)
 1. In the linked service configuration pane, enter 'SQLDW' as your linked service name. Enter in your credentials to allow data factory to connect to your database. If you're using SQL authentication, enter in the server name, the database, your user name and password. You can verify your connection information is correct by clicking **Test connection**. Click **Create** when finished.
@@ -253,7 +253,7 @@ The data flow created in this step inner joins the 'TripDataCSV' dataset created
 
     ![Portal](./assets/images/sink2.png)
 
-1. Select the **Azure Synapse Analytics (formerly known as SQL DW)** tile and click continue.
+1. Select the **Azure Synapse Analytics (formerly SQL DW)** tile and click continue.
 
     ![Portal](./assets/images/sink3.png)
 1. Call your dataset 'AggregatedTaxiData'. Select 'SQLDW' as your linked service. Select **Create new table** and name the new table dbo.AggregateTaxiData. Click OK when finished
@@ -283,7 +283,7 @@ You have successfully created your data flow. Now its time to run it in a pipeli
 
     ![Portal](./assets/images/pipeline5.png)
 
-You have now completed the data factory portion of this lab. Publish your resources if you wish to operationalize them with triggers. You successfully ran a pipeline that ingested data from Azure SQL Database to Azure Data Lake Storage using the copy activity and then aggregated that data into an Azure SQL Data warehouse. You can verify the data was successfully written by looking at the SQL Server itself.
+You have now completed the data factory portion of this lab. Publish your resources if you wish to operationalize them with triggers. You successfully ran a pipeline that ingested data from Azure SQL Database to Azure Data Lake Storage using the copy activity and then aggregated that data into an Azure Synapse Analytics. You can verify the data was successfully written by looking at the SQL Server itself.
 
 ## Share data using Azure Data Share
 
