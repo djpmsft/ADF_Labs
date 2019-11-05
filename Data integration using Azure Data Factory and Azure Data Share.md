@@ -2,7 +2,7 @@
 
 As customers embark on their modern data warehouse and analytics projects, they require not only more data but also more visibility into their data across their data estate. This workshop dives into how improvements to Azure Data Factory and Azure Data Share simplify data integration and management in Azure. From enabling code-free ETL/ELT to creating a comprehensive view over your data, improvements in Azure Data Factory will empower your data engineers to confidently bring in more data, and thus more value, to your enterprise. Also, learn about Azure Data Share and how you can do B2B sharing in a governed manner.
 
-In this workshop, you will use Azure Data Factory (ADF) to ingest data from an Azure SQL database (SQL DB) into Azure Data Lake Storage gen2 (ADLS gen2). Once you land the data in the lake, you will transform it via mapping data flows, data factory's native transformation service, and sink it into Azure SQL data warehouse (SQL DW). Then, you will share the table with transformed data along with some additional data using Azure Data Share. 
+In this workshop, you will use Azure Data Factory (ADF) to ingest data from an Azure SQL database (SQL DB) into Azure Data Lake Storage gen2 (ADLS gen2). Once you land the data in the lake, you will transform it via mapping data flows, data factory's native transformation service, and sink it into Azure Synapse Analytics (formerly SQL DW). Then, you will share the table with transformed data along with some additional data using Azure Data Share. 
 
 The data used in this lab is New York City taxi data. To import it into your Azure SQL database, download the [taxi-data bacpac file](https://github.com/djpmsft/ADF_Labs/blob/master/sample-data/taxi-data.bacpac).
 
@@ -10,11 +10,11 @@ The data used in this lab is New York City taxi data. To import it into your Azu
 
 * **Azure subscription**: If you don't have an Azure subscription, create a [free account](https://azure.microsoft.com/free/) before you begin.
 
-* **Azure SQL Database**: If you don't have a SQL DW, learn how to [create a SQL DW account](https://docs.microsoft.com/azure/sql-database/sql-database-single-database-get-started?tabs=azure-portal)
+* **Azure SQL Database**: If you don't have a SQL DB, learn how to [create a SQL DB account](https://docs.microsoft.com/azure/sql-database/sql-database-single-database-get-started?tabs=azure-portal)
 
 * **Azure Data Lake Storage Gen2 storage account**: If you don't have an ADLS Gen2 storage account, learn how to [create an ADLS Gen2 storage account](https://docs.microsoft.com/azure/storage/blobs/data-lake-storage-quickstart-create-account).
 
-* **Azure SQL Data Warehouse**: If you don't have a SQL DW, learn [create a SQL DW account](https://docs.microsoft.com/azure/sql-data-warehouse/create-data-warehouse-portal).
+* **Azure Synapse Analytics (formerly SQL DW)**: If you don't have an Azure Synapse Analytics (formerly SQL DW), learn how to [create an Azure Synapse Analytics instance](https://docs.microsoft.com/azure/sql-data-warehouse/create-data-warehouse-portal).
 
 * **Azure Data Factory**: If you have not created a data factory, see how to [create a data factory](https://docs.microsoft.com/azure/data-factory/quickstart-create-data-factory-portal).
 
@@ -22,7 +22,7 @@ The data used in this lab is New York City taxi data. To import it into your Azu
 
 ## Set up your Azure Data Factory environment
 
-In this section, you will learn how to access the Azure Data Factory user experience (ADF UX) from the Azure portal. Once in the ADF UX, you will configure three linked service for each of the data stores we are using: Azure SQL DB, ADLS Gen2, and Azure SQL DW.
+In this section, you will learn how to access the Azure Data Factory user experience (ADF UX) from the Azure portal. Once in the ADF UX, you will configure three linked service for each of the data stores we are using: Azure SQL DB, ADLS Gen2, and Azure Synapse Analytics.
 
 In Azure Data Factory, linked services define the connection information to external resources. Azure Data Factory currently supports over 85 connectors.
 
@@ -57,9 +57,9 @@ In Azure Data Factory, linked services define the connection information to exte
 
     ![Portal](./assets/images/configure5.png)
 
-### Create an Azure SQL data warehouse linked service
+### Create an Azure Synapse Analytics linked service
 
-1. Repeat the same process to add an Azure SQL DW linked service. In the connections tab, click **New**. Select the **Azure SQL Data Warehouse** tile and click continue.
+1. Repeat the same process to add an Azure Synapse Analytics linked service. In the connections tab, click **New**. Select the **Azure SQL Data Warehouse** tile and click continue.
 
     ![Portal](./assets/images/configure6.png)
 1. In the linked service configuration pane, enter 'SQLDW' as your linked service name. Enter in your credentials to allow data factory to connect to your database. If you're using SQL authentication, enter in the server name, the database, your user name and password. You can verify your connection information is correct by clicking **Test connection**. Click **Create** when finished.
@@ -244,16 +244,16 @@ The data flow created in this step inner joins the 'TripDataCSV' dataset created
 
     ![Portal](./assets/images/agg7.png)
 
-### Configure you SQL DW sink
+### Configure you Azure Synapse Analytics sink
 
-1. Now that we have finished our transformation logic, we are ready to sink our data in a Azure SQL DW table. Add a sink transformation under the **Destination** section.
+1. Now that we have finished our transformation logic, we are ready to sink our data in an Azure Synapse Analytics table. Add a sink transformation under the **Destination** section.
 
     ![Portal](./assets/images/sink1.png)
-1. Name your sink 'SQLDWSink'. Click **New** next to the sink dataset field to create a new SQL DW dataset.
+1. Name your sink 'SQLDWSink'. Click **New** next to the sink dataset field to create a new Azure Synapse Analytics dataset.
 
     ![Portal](./assets/images/sink2.png)
 
-1. Select the **Azure SQL Data Warehouse** tile and click continue.
+1. Select the **Azure Synapse Analytics (formerly known as SQL DW)** tile and click continue.
 
     ![Portal](./assets/images/sink3.png)
 1. Call your dataset 'AggregatedTaxiData'. Select 'SQLDW' as your linked service. Select **Create new table** and name the new table dbo.AggregateTaxiData. Click OK when finished
