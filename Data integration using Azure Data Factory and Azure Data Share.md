@@ -105,7 +105,7 @@ Next, you will switch hats and become the *data consumer*. As the data consumer,
 
    ![Review and create share](./assets/images/ads-create-share-review-and-create.png)
 
-   Lets review what you can see as a data provider after you have created share. 
+   Let's review what you can see as a data provider after you have created share. 
 
    ![View share](./assets/images/ads-create-share-complete.png)
 
@@ -117,9 +117,7 @@ Next, you will switch hats and become the *data consumer*. As the data consumer,
 
 1. Select the **Share subscriptions** tab. Note that no share subscriptions exist yet because your data consumer has not yet accepted your invitation.
 
-1. Select the **Invitations** tab. Here, you'll see a list of pending invitations, send invitiation to additional users or delete invitations prior to user accepting it.
-
-    ![Pending invitations](./assets/images/ads-sent-share-invitation-pending.png)
+1. Select the **Invitations** tab. Here you'll see a list of pending invitations, send invitiation to additional users or delete invitations prior to user accepting it.
 
 1. Select the **History** tab. Note that nothing is displayed as yet because your data consumer has not yet accepted your invitation and triggered a snapshot. 
 
@@ -137,9 +135,11 @@ IMPORTANT: Make sure you use the login and Azure tenant provided for the lab to 
 
 1. In the list 'Data Share Invitations', select the invitation titled **TaxiData**. 
 
-   ![Invitation details](./assets/images/ads-accept-invitation.png)
+   ![Invitation details](./assets/images/ads-invitation-list.png)
 
 1. Review invitation details and accept the **terms of use** if provided.
+
+   ![Invitation details](./assets/images/ads-accept-invitation.png)
 
 1. Select the Subscription and Resouce Group used by your lab. 
 
