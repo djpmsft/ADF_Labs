@@ -43,7 +43,7 @@ Next, you will switch hats and become the *data consumer*. As the data consumer,
 
     ![Portal](./assets/images/portal-ads.png)
 
-1. Select the data share account with 'Provider' in the name. For example, **DataProvider123456**. 
+1. Select the data share account with 'Provider' in the name. For example, **DataProvider-123456**. 
 
 1. Select **Start sharing your data**
 
