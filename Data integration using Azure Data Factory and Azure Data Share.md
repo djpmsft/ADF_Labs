@@ -65,19 +65,17 @@ Next, you will switch hats and become the *data consumer*. As the data consumer,
 
    ![Select SQL Database type](./assets/images/ads-create-share-add-dataset-type-sql.png)
     
-1. Select the SQL server with "sqldb3rdparty-srv" in the name (for example, **sqldb3rdparty-srv-123456**).
+1. Select the SQL server with "sqldb3rdparty-srv" in the name (for example, **sqldb3rdparty-srv-123456**). Authenticate with your SQL server admin login and password. You will be given a script to run before you can proceed. The script provided creates a user in the SQL database to allow the Data Share resource's managed identity to authenticate on its behalf. **Copy** the script.
 
    ![SQL dataset details](./assets/images/ads-create-share-add-dataset-sql-details.png)
 
-1. Authenticate with your SQL server admin login and password.
+1. Open a new web browser tab and navigate to the Azure portal. Make sure you are logged into the same tenant using the same login credentials provided for the lab. Select the SQL Database **sqldb3rdparty**. Select **Query editor (preview)** and **Active Directory authentication**. 
 
-1. You will be given a script to run before you can proceed. The script provided creates a user in the SQL database to allow the Data Share resource's managed identity to authenticate on its behalf. 
-
-1. Open a new web browser tab and navigate to the Azure portal. Select the SQL Database **sqldb3rdparty**. Select **Query editor (preview)** and **Active Directory authentication**. Note that prior to this step, you must set yourself as the Active Directory Admin for the SQL server, and allow your client IP to access the SQL server. These steps have been completed for you in the lab environment. 
+   Note that prior to this step, you must set yourself as the Active Directory Admin for the SQL server, and allow your client IP to access the SQL server. These two steps have been completed for you in the lab environment. 
 
    ![SQL Query Editor Login](./assets/images/ads-sql-query-editor-login.png)
 
-1. Copy the script from the Azure Data Share Add Dataset screen, and run the query. The script looks like below where "DataProvider-xxxxxx" is the name of your data share resource (for example, **DataProvider-123456**).
+1. Paste the script copied from Azure Data Share and run the query. The script looks like below where "DataProvider-xxxxxx" is the name of your data share resource (for example, **DataProvider-123456**).
 
    ```
    create user "DataProvider-xxxxxx" from external provider; exec sp_addrolemember db_owner, "DataProvider-xxxxxx";
@@ -107,7 +105,7 @@ Next, you will switch hats and become the *data consumer*. As the data consumer,
 
    ![Review and create share](./assets/images/ads-create-share-review-and-create.png)
 
-Lets review what you can see as a data provider after you have created share. 
+   Lets review what you can see as a data provider after you have created share. 
 
    ![View share](./assets/images/ads-create-share-complete.png)
 
@@ -151,7 +149,7 @@ IMPORTANT: Make sure you use the login and Azure tenant provided for the lab to 
 
 1. Select **Accept and configure later**. 
 
-You are now taken to the 'DataConsumer' data share resource. In the list of 'Received Shares', you should see 'TaxiData'.
+   You are now taken to the 'DataConsumer' data share resource. In the list of 'Received Shares', you should see 'TaxiData'.
 
 1. Select the received share (for example, **TaxiData**).
 
