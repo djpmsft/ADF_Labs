@@ -51,33 +51,31 @@ Next, you will switch hats and become the *data consumer*. As the data consumer,
 
 1. Select **+Create** to start configuring your new share. 
 
-1. Under **Share name**, specify a name of your choice. Note that this is the share name that will be seen by your data consumer, so be sure to give it a descriptive name such as TaxiData.
+    ![Create share](./assets/images/ads-sent-share-create.png)
 
-1. Under **Description**, put in a sentence which describes the contents of the share. The share will contain New York Taxi trip fare data.
+1. Fill in the share details. Under **Share name**, specify a name of your choice. Note that this is the share name that will be seen by your data consumer, so be sure to give it a descriptive name such as TaxiData. Under **Description**, put in a sentence which describes the contents of the share. The share will contain New York Taxi trip fare data. Under **Terms of use**, specify a set of terms that you would like your data consumer to adhere to. Some examples include "Do not distribute this data outside your organization" or "Refer to legal agreement". Select **Continue**. 
 
-1. Under **Terms of use**, specify a set of terms that you would like your data consumer to adhere to. Some examples include "Do not distribute this data outside your organization" or "Refer to legal agreement". 
-
-    ![Share details](./assets/images/ads-details.png)
-
-1. Select **Continue**. 
+   ![Share details](./assets/images/ads-create-share-details.png)
 
 1. Select **Add datasets** 
 
-    ![Add dataset](./assets/images/add-dataset.png)
+   ![Add dataset](./assets/images/ads-create-share-add-dataset-button.png)
 
 1. Select **Azure SQL Database**.
 
-    ![Add dataset](./assets/images/add-dataset-sql.png)
+   ![Select SQL Database type](./assets/images/add-create-share-add-dataset-type-sql.png)
     
 1. Select the SQL server with "sqldb3rdparty-srv" in the name (for example, **sqldb3rdparty-srv-123456**).
+
+   ![SQL dataset details](./assets/images/add-create-share-add-dataset-sql-details.png)
 
 1. Authenticate with your SQL server admin login and password.
 
 1. You will be given a script to run before you can proceed. The script provided creates a user in the SQL database to allow the Data Share resource's managed identity to authenticate on its behalf. 
 
-    IMPORTANT: Before running the script, you must set yourself as the Active Directory Admin for the SQL Server. 
+1. Open a new web browser tab and navigate to the Azure portal. Select the SQL Database **sqldb3rdparty**. Select **Query editor (preview)** and **Active Directory authentication**. Note that prior to this step, you must set yourself as the Active Directory Admin for the SQL server, and allow your client IP to access the SQL server. These steps have been completed for you in the lab environment. 
 
-1. Open a new tab and navigate to the Azure portal. Select the SQL Database **sqldb3rdparty**. Select **Query editor (preview)** and **Active Directory authentication**. 
+   ![SQL Query Editor Login](./assets/images/ads-sql-query-editor-login.png)
 
 1. Copy the script from the Azure Data Share Add Dataset screen, and run the query. The script looks like below where "DataProvider-xxxxxx" is the name of your data share resource (for example, **DataProvider-123456**).
 
@@ -85,37 +83,45 @@ Next, you will switch hats and become the *data consumer*. As the data consumer,
    create user "DataProvider-xxxxxx" from external provider; exec sp_addrolemember db_owner, "DataProvider-xxxxxx";
    ```
    
-1. Switch back to Azure Data Share where you were adding datasets to your data share. 
+   ![Run SQL Query](./assets/images/ads-sql-editor-run-query.png)
+      
+1. Switch back to Azure Data Share where you were adding datasets to your share. 
 
 1. Select SQL Database **sqldb3rdparty**, and select table **TripFares**. 
 
-1. Select **Add dataset**
+1. Click **Next** to confirm the dataset name, then click **Add dataset**.
 
-    We now have a SQL table that is part of our dataset.  
+1. Review the dataset has been added and select **Continue**. 
 
-1. Review the datasets that have been added and select **Continue**. 
+   ![Dataset added](./assets/images/ads-create-share-add-dataset-sql-added.png)
 
-1. Add recipients to your share. The recipients you add will receive invitations to your share. Use login e-mail address of your Azure tenant for the lab. 
+1. Add recipients to your share. The recipients you add will receive invitations to your share. Use login e-mail address of your Azure tenant for the lab. Select **Continue**.
 
-   ![Add recipients](./assets/images/add-recipients.png)
+   ![Add recipients](./assets/images/ads-create-share-add-recipient.png)
 
-1. Configure a Snapshot Setting for your data consumer. This will allow them to receive regular updates (hourly or daily) of your data at an interval defined by you. Check **Snapshot Schedule**. Leave the Start time and Recurrence as default. Select **Continue**.
+1. Configure a snapshot schedule for your data consumer. This will allow them to receive regular updates (hourly or daily) of your data at an interval defined by you. Check **Snapshot Schedule**. Leave the Start time and Recurrence as default. Select **Continue**.
+
+   ![Configure snapshot schedule](./assets/images/ads-create-share-snapshot-schedule.png)
 
 1. Review everything and select **Create**. A share is now created in your Sent Shares.
 
+   ![Review and create share](./assets/images/ads-create-share-review-and-create.png)
+
 Lets review what you can see as a data provider after you have created share. 
+
+   ![View share](./assets/images/ads-create-share-complete.png)
 
 1. Select the share that you just created (for example, **TaxiData**).
 
-1. Select the **Datasets** tab. Note that you can add or remove datasets after it has been created. 
+1. In **Details** tab, you can view share name, description, terms of use and snapshot schedule. Note that you can disable the snapshot schedule if you choose. 
 
-1. Select the **Snapshot Setting** tab. Note that you can disable the snapshot schedule if you choose. 
+1. Select the **Datasets** tab. Note that you can add or remove datasets after it has been created. 
 
 1. Select the **Share subscriptions** tab. Note that no share subscriptions exist yet because your data consumer has not yet accepted your invitation.
 
 1. Select the **Invitations** tab. Here, you'll see a list of pending invitations, send invitiation to additional users or delete invitations prior to user accepting it.
 
-    ![Pending invitations](./assets/images/pending-invites.png)
+    ![Pending invitations](./assets/images/ads-sent-share-invitation-pending.png)
 
 1. Select the **History** tab. Note that nothing is displayed as yet because your data consumer has not yet accepted your invitation and triggered a snapshot. 
 
@@ -127,11 +133,13 @@ You should now have an Azure Data Share invitation in your inbox from Microsoft 
 
 In the e-mail that you should have received (it may take up to a few minutes for the email to arrive), click on **View invitation >**. 
 
-![Email invitation](./assets/images/email-invite.png)
+![Email invitation](./assets/images/ads-invitation-email.png)
 
 IMPORTANT: Make sure you use the login and Azure tenant provided for the lab to authenticate into Azure portal. 
 
 1. In the list 'Data Share Invitations', select the invitation titled **TaxiData**. 
+
+   ![Invitation details](./assets/images/ads-accept-invitation.png)
 
 1. Review invitation details and accept the **terms of use** if provided.
 
@@ -141,37 +149,33 @@ IMPORTANT: Make sure you use the login and Azure tenant provided for the lab to 
 
 1. For **Received share name**, you'll notice the default share name is the name that was specified by the data provider (for example, **TaxiData**). You can leave the name as is.
 
-    ![Invitation accept](./assets/images/consumer-accept.png)
-
 1. Select **Accept and configure later**. 
 
 You are now taken to the 'DataConsumer' data share resource. In the list of 'Received Shares', you should see 'TaxiData'.
 
 1. Select the received share (for example, **TaxiData**).
 
-1. Select the **Datasets** tab to specify a target Azure data store to receive the data.  
+   ![Received share](./assets/images/ads-received-share.png)
 
-    ![unmapped datasets](./assets/images/unmapped.png)
+1. Select the **Datasets** tab to specify a target Azure data store to receive the data.  
 
 1. Check **TripFares** and then select **+ Map to Target**.
 
+   ![unmapped datasets](./assets/images/ads-received-share-click-map-to-target.png)
+
 1. On the right hand side of the screen, from the **Target Data Type** drop down, you will notice a list of options for where you can receive the data into. Select **Azure Data Lake Store Gen2**, specify **adlsg2storoizec3owmu3b6** as the storage account, and **taxidata** as the file system name. You have an option to choose either CSV or Parquet output file format. Leave it as default **Csv**. Click **Map to target**.
 
-   ![mapping](./assets/images/mapping-options.png)
+   ![mapping](./assets/images/ads-received-share-map-to-target.png)
 
-   ![storage](./assets/images/storage-map.png)
-
-Now dataset is mapped, and you are ready to receive data. 
-
-   ![mapped](./assets/images/all-mapped.png)
+   Now dataset is mapped, and you are ready to receive data. 
     
 1. Select **Snapshot Schedule**. Here you can view and enable the automated update schedule provided by data provider. Check the checkbox right next to the schedule and select **+Enable**.
 
-1. Select **Details** tab. 
+   ![Enable snapshot schedule](./assets/images/ads-received-share-enable-snapshot-schedule.png)
 
-1. Select **Trigger snapshot -> Full Copy**. This will start copying data into the target storage account you specified in the previous step. It will take approximately 3-5 minutes for the data to come across. 
+1. Select **Details** tab, and select **Trigger snapshot -> Full Copy**. This will start copying data into the target storage account you specified in the previous step. It will take approximately 3-5 minutes for the data to come across. 
 
-    ![trigger](./assets/images/trigger-full.png)
+   ![Trigger snapshot](./assets/images/ads-received-share-trigger-snapshot.png)
 
 1. Select **History** tab, and click **Refresh** to monitor snapshot status.
 
@@ -179,7 +183,15 @@ Now dataset is mapped, and you are ready to receive data.
 
 1. Navigate back to the data consumer's data share resource (for example, **DataConsumer-123456**). Verify the status of the snapshot is successful. Click on "Start' time to drill into the snapshot history. Click on 'Succeeded" to view details of the snapshot result.
 
-1. Select **Datasets** tab, click on the link under 'PATH' which should look similar to this: adlsg2storoizec3owmu3b6/taxidata/TripFares.csv. It will navigate to your ADLS Gen2 account **adlsg2storoizec3owmu3b6** where the data is received into. Open **Storage Explorer (preview)** to verify the filesystem 'taxidata' is created, and within it, there should be a file named 'TripFares.csv'.
+   ![View history](./assets/images/ads-received-share-view-history.png)
+
+1. Select **Datasets** tab, click on the link under 'PATH' which should look similar to this: adlsg2storoizec3owmu3b6/taxidata/TripFares.csv. It will navigate to your ADLS Gen2 account **adlsg2storoizec3owmu3b6** where the data is received into.
+
+   ![Go to storage account](./assets/images/ads-received-share-dataset-link.png)
+
+1. In the storage account, open **Storage Explorer (preview)** to verify the filesystem 'taxidata' is created, and within it, there should be a file named 'TripFares.csv'.
+
+   ![Received data](./assets/images/ads-target-storage.png)
 
 This concludes the Azure Data Share portion of the lab. In the next section, you will use Azure Data Factory to process the received data.
 
