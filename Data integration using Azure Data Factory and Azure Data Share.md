@@ -36,17 +36,17 @@ Next, you will switch hats and become the *data consumer*. As the data consumer,
 
     ![Portal](./assets/images/portal-ads.png)
 
-1. Select the data share account with 'Provider' in the name. For example, **DataProvider0102**. 
+1. Select the data share account with 'Provider' in the name. For example, **DataProvider123456**. 
 
 1. Select **Start sharing your data**
 
     ![Start sharing](./assets/images/ads-start-sharing.png)
 
-1. Select **+Create** to start configuring your new data share. 
+1. Select **+Create** to start configuring your new share. 
 
 1. Under **Share name**, specify a name of your choice. Note that this is the share name that will be seen by your data consumer, so be sure to give it a descriptive name such as TaxiData.
 
-1. Under **Description**, put in a sentence which describes the contents of the data share. The data share will contain world wide taxi trip data which is stored in a number of stores including Azure SQL Data Warehouse and Azure Data Lake Store. 
+1. Under **Description**, put in a sentence which describes the contents of the share. The share will contain New York Taxi trip fare data.
 
 1. Under **Terms of use**, specify a set of terms that you would like your data consumer to adhere to. Some examples include "Do not distribute this data outside your organization" or "Refer to legal agreement". 
 
@@ -58,52 +58,37 @@ Next, you will switch hats and become the *data consumer*. As the data consumer,
 
     ![Add dataset](./assets/images/add-dataset.png)
 
-1. Select **Azure SQL Data Warehouse** to select a table from the Azure SQL Data Warehouse that your ADF transformations landed in. (Note: Azure SQL Data Warehouse is now known as Azure Synapse Analytics)
+1. Select **Azure SQL Database**.
 
     ![Add dataset](./assets/images/add-dataset-sql.png)
     
-1. You will be given a script to run before you can proceed. The script provided creates a user in the SQL database to allow the Azure Data Share MSI to authenticate on it's behalf. 
+1. Select the SQL server with "sqldb3rdparty-srv" in the name (for example, **sqldb3rdparty-srv-123456**).
+
+1. Authenticate with your SQL server admin login and password.
+
+1. You will be given a script to run before you can proceed. The script provided creates a user in the SQL database to allow the Data Share resource's managed identity to authenticate on its behalf. 
 
     IMPORTANT: Before running the script, you must set yourself as the Active Directory Admin for the SQL Server. 
 
-1. Open a new tab and navigate to the Azure portal. Copy the script provided to create a user in the database that you want to share data from. You must do this by logging into the EDW database using Query Explorer (preview) using AAD authentication. 
+1. Open a new tab and navigate to the Azure portal. Select the SQL Database **sqldb3rdparty**. Select **Query editor (preview)** and **Active Directory authentication**. 
 
-    You will need to modify the script so that the user created is contained within brackets. Eg:
-    
-    create user [dataprovider-xxxx] from external login; 
-    exec sp_addrolemember db_owner, [dataprovider-xxxx];
+1. Copy the script from the Azure Data Share Add Dataset screen, and run the query. The script looks like below where "DataProvider-xxxxxx" is the name of your data share resource (for example, **DataProvider-123456**).
+
+   create user "DataProvider-xxxxxx" from external provider; exec sp_addrolemember db_owner, "DataProvider-xxxxxx";
     
 1. Switch back to Azure Data Share where you were adding datasets to your data share. 
 
-1. Select **EDW** for the SQL Data Warehouse, and select **AggregatedTaxiData** for the table. 
+1. Select SQL Database **sqldb3rdparty**, and select table **TripFares**. 
 
 1. Select **Add dataset**
 
-    We now have a SQL table that is part of our dataset. Next, we will add additional datasets from Azure Data Lake Store. 
+    We now have a SQL table that is part of our dataset.  
 
-1. Select **Add dataset** and select **Azure Data Lake Store Gen2**
+1. Review the datasets that have been added and select **Continue**. 
 
-    ![Add dataset](./assets/images/add-dataset-adls.png)
-
-1. Select **Next**
-
-1. Expand *wwtaxidata*. Expand *Boston Taxi Data*. Notice that you can share down to the file level. 
-
-1. Select the *Boston Taxi Data* folder to add the entire folder to your data share. 
-
-1. Select **Add datasets**
-
-1. Review the datasets that have been added. You should have a SQL table and an ADLSGen2 folder added to your data share. 
-
-1. Select **Continue**
-
-1. In this screen, you can add recipients to your data share. The recipients you add will receive invitations to your data share. For the purpose of this lab, you must add in 2 e-mail addresses:
-
-    1. The e-mail address of the Azure subscription you are in. 
+1. In this screen, you can add recipients to your share. The recipients you add will receive invitations to your share. Use login e-mail address to your Azure tenant for the lab. 
 
         ![Add recipients](./assets/images/add-recipients.png)
-
-    1. Add in the fictional data consumer named *janedoe@fabrikam.com*.
 
 1. In this screen, you can configure a Snapshot Setting for your data consumer. This will allow them to receive regular updates of your data at an interval defined by you. 
 
