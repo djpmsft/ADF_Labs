@@ -63,11 +63,11 @@ Next, you will switch hats and become the *data consumer*. As the data consumer,
 
 1. Select **Azure SQL Database**.
 
-   ![Select SQL Database type](./assets/images/add-create-share-add-dataset-type-sql.png)
+   ![Select SQL Database type](./assets/images/ads-create-share-add-dataset-type-sql.png)
     
 1. Select the SQL server with "sqldb3rdparty-srv" in the name (for example, **sqldb3rdparty-srv-123456**).
 
-   ![SQL dataset details](./assets/images/add-create-share-add-dataset-sql-details.png)
+   ![SQL dataset details](./assets/images/ads-create-share-add-dataset-sql-details.png)
 
 1. Authenticate with your SQL server admin login and password.
 
