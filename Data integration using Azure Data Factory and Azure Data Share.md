@@ -7,15 +7,11 @@ In this workshop, you will use Azure Data Share to receive data from a third par
 The data used in this lab is New York City taxi data. To import it into your Azure SQL database, download the [taxi-data bacpac file](https://github.com/djpmsft/ADF_Labs/blob/master/sample-data/taxi-data.bacpac).
 
 ## Contents
-- [Heading](#heading)
-  * [Sub-heading](#sub-heading)
-    + [Sub-sub-heading](#sub-sub-heading)
-- [Heading](#heading-1)
-  * [Sub-heading](#sub-heading-1)
-    + [Sub-sub-heading](#sub-sub-heading-1)
-- [Heading](#heading-2)
-  * [Sub-heading](#sub-heading-2)
-    + [Sub-sub-heading](#sub-sub-heading-2)
+- [Prerequisites](#prerequisites)
+- [Share and receive data using Azure Data Share](#share-and-receive-data-using-azure-data-share)
+  * [Share data (data provider flow)](#share-data-data-provider-flow)
+  * [Receive data (data consumer flow)](#receive-data-data-consumer-flow)
+- [Set up your Azure Data Factory environment](#set-up-your-azure-data-factory-environment) 
 
 ## Prerequisites
 
@@ -39,7 +35,7 @@ First, you will pretend to be the *third party data provider* to share data. Thi
 
 Next, you will switch hats and become the *data consumer*. As the data consumer, you will walk through the flow of accepting a share invitation, configuring where you'd like the data to be received and mapping datasets to ADLS Gen2 storage account. Then, you will trigger a snapshot which will copy the data shared with you into the destination specified. 
 
-### Sharing data (Data Provider flow)
+### Share data (Data Provider flow)
 
 1. Open the Azure portal in either Microsoft Edge or Google Chrome.
 
@@ -123,7 +119,7 @@ Lets review what you can see as a data provider after you have created share.
 
 1. Select the **History** tab. Note that nothing is displayed as yet because your data consumer has not yet accepted your invitation and triggered a snapshot. 
 
-### Receiving data (Data consumer flow)
+### Receive data (Data consumer flow)
 
 Now you are switching hat to be the data consumer. As a data consumer, you will receive data into your ADLS Gen2 account and then in the next section of the lab, you will use Azure Data Factory to process the data. 
 
@@ -169,6 +165,8 @@ Now dataset is mapped, and you are ready to receive data.
 
    ![mapped](./assets/images/all-mapped.png)
     
+1. Select **Snapshot Schedule**. Here you can view and enable the automated update schedule provided by data provider. Check the checkbox right next to the schedule and select **+Enable**.
+
 1. Select **Details** tab. 
 
 1. Select **Trigger snapshot -> Full Copy**. This will start copying data into the target storage account you specified in the previous step. It will take approximately 3-5 minutes for the data to come across. 
@@ -179,9 +177,9 @@ Now dataset is mapped, and you are ready to receive data.
 
 1. While you are waiting, navigate to the data provider's data share resource (for example, **DataProvider-123456**). Select **Sent Share**, **TaxiData**, and view the status of the **Share Subscriptions** and **History** tab. Click **Refresh** if no data is showing. Notice that there is now an active share subscription, and as a data provider, you can also monitor when snapshots of the data are sent to data consumer. 
 
-1. Navigate back to the data consumer's data share resource (for example, **DataConsumer-123456**). Verify the status of the snapshot is successful.
+1. Navigate back to the data consumer's data share resource (for example, **DataConsumer-123456**). Verify the status of the snapshot is successful. Click on "Start' time to drill into the snapshot history. Click on 'Succeeded" to view details of the snapshot result.
 
-1. Go to your ADLS Gen2 account **adlsg2storoizec3owmu3b6**, open **Storage Explorer (preview)** to verify the filesystem 'taxidata' is created, and within it, there should be a file named 'TripFares.csv'.
+1. Select **Datasets** tab, click on the link under 'PATH' which should look similar to this: adlsg2storoizec3owmu3b6/taxidata/TripFares.csv. It will navigate to your ADLS Gen2 account **adlsg2storoizec3owmu3b6** where the data is received into. Open **Storage Explorer (preview)** to verify the filesystem 'taxidata' is created, and within it, there should be a file named 'TripFares.csv'.
 
 This concludes the Azure Data Share portion of the lab. In the next section, you will use Azure Data Factory to process the received data.
 
