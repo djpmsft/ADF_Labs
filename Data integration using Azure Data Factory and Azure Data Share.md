@@ -93,7 +93,7 @@ Next, you will switch hats and become the *data consumer*. As the data consumer,
 
    ![Dataset added](./assets/images/ads-create-share-add-dataset-sql-added.png)
 
-1. Add recipients to your share. The recipients you add will receive invitations to your share. Use login e-mail address of your Azure tenant for the lab. Select **Continue**.
+1. Add recipients to your share. The recipients you add will receive invitations to your share. Click **Add recipient** and enter email address. Use login e-mail address of your Azure tenant for the lab. Select **Continue**.
 
    ![Add recipients](./assets/images/ads-create-share-add-recipient.png)
 
@@ -125,13 +125,13 @@ Next, you will switch hats and become the *data consumer*. As the data consumer,
 
 Now you are switching hat to be the data consumer. As a data consumer, you will receive data into your ADLS Gen2 account and then in the next section of the lab, you will use Azure Data Factory to process the data. 
 
-You should now have an Azure Data Share invitation in your inbox from Microsoft Azure. In web browser, type **outlook.com** to launch Outlook Web Access. Log in using the credentials supplied for your Azure tenant.
+1. You should now have an Azure Data Share invitation in your inbox from Microsoft Azure. In web browser, type **outlook.com** to launch Outlook Web Access. Log in using the credentials supplied for your Azure tenant.
 
-In the e-mail that you should have received (it may take up to a few minutes for the email to arrive), click on **View invitation >**. 
+   Note if you are unable to access email during your lab, you can login to Azure portal using the lab credentials, and type 'Data Share Invitation' in the search to find a list of invitations.
 
-![Email invitation](./assets/images/ads-invitation-email.png)
+1. In the e-mail that you should have received (it may take up to a few minutes for the email to arrive), click on **View invitation >**. Log into Azure portal with your lab credentials.
 
-IMPORTANT: Make sure you use the login and Azure tenant provided for the lab to authenticate into Azure portal. 
+   ![Email invitation](./assets/images/ads-invitation-email.png) 
 
 1. In the list 'Data Share Invitations', select the invitation titled **TaxiData**. 
 
@@ -141,9 +141,7 @@ IMPORTANT: Make sure you use the login and Azure tenant provided for the lab to 
 
    ![Invitation details](./assets/images/ads-accept-invitation.png)
 
-1. Select the Subscription and Resouce Group used by your lab. 
-
-1. For **Data share account**, select a data share resource with 'dataConsumer' in the name (for example, **DataConsumer-123456**). Note that you can also have the option to create a new Azure Data Share resource. 
+1. Under 'TARGET DATA SHARE ACCOUNT', select the Subscription and Resouce Group (for example, **ODL-azure-123456-01**). Make sure to select resource group with **-01** at the end. For **Data share account**, select a data share resource with 'dataConsumer' in the name (for example, **DataConsumer-123456**). Note that you can also have the option to create a new Azure Data Share resource. 
 
 1. For **Received share name**, you'll notice the default share name is the name that was specified by the data provider (for example, **TaxiData**). You can leave the name as is.
 
@@ -155,13 +153,11 @@ IMPORTANT: Make sure you use the login and Azure tenant provided for the lab to 
 
    ![Received share](./assets/images/ads-received-share.png)
 
-1. Select the **Datasets** tab to specify a target Azure data store to receive the data.  
-
-1. Check **TripFares** and then select **+ Map to Target**.
+1. Select the **Datasets** tab to specify a target Azure data store to receive the data. Check **TripFares** and then select **+ Map to Target**.
 
    ![unmapped datasets](./assets/images/ads-received-share-click-map-to-target.png)
 
-1. On the right hand side of the screen, from the **Target Data Type** drop down, you will notice a list of options for where you can receive the data into. Select **Azure Data Lake Store Gen2**, specify **adlsg2storoizec3owmu3b6** as the storage account, and **taxidata** as the file system name. You have an option to choose either CSV or Parquet output file format. Leave it as default **Csv**. Click **Map to target**.
+1. On the right hand side of the screen, from the **Target Data Type** drop down, you will notice a list of options for where you can receive the data into. Select **Azure Data Lake Store Gen2**, enter Azure subscription and resource group (for example, **ODL-azure-123456-01**). Make sure to select resource group with **-01** at the end for this lab. Specify **adlsg2storoizec3owmu3b6** as the storage account, and **taxidata** as the file system name. You have an option to choose either CSV or Parquet output file format. Leave it as default **Csv**. Click **Map to target**.
 
    ![mapping](./assets/images/ads-received-share-map-to-target.png)
 
@@ -177,9 +173,9 @@ IMPORTANT: Make sure you use the login and Azure tenant provided for the lab to 
 
 1. Select **History** tab, and click **Refresh** to monitor snapshot status.
 
-1. While you are waiting, navigate to the data provider's data share resource (for example, **DataProvider-123456**). Select **Sent Share**, **TaxiData**, and view the status of the **Share Subscriptions** and **History** tab. Click **Refresh** if no data is showing. Notice that there is now an active share subscription, and as a data provider, you can also monitor when snapshots of the data are sent to data consumer. 
+1. While you are waiting, navigate to the data provider's data share resource (for example, **DataProvider-123456**). Select **Sent Share** in left navigation, then **TaxiData**, and view the status of the **Share Subscriptions** and **History** tab. Click **Refresh** if no data is showing. Notice that there is now an active share subscription, and as a data provider, you can also monitor when snapshots of the data are sent to data consumer. 
 
-1. Navigate back to the data consumer's data share resource (for example, **DataConsumer-123456**). Verify the status of the snapshot is successful. Click on "Start' time to drill into the snapshot history. Click on 'Succeeded" to view details of the snapshot result.
+1. Navigate back to the data consumer's data share resource (for example, **DataConsumer-123456**). Select **Received Share** in left navigation, then **TaxiData**. Click on **History** tab to verify the status of the snapshot is successful. Click on "Start' time to drill into the snapshot history. Click on **Succeeded** to view details of the snapshot result.
 
    ![View history](./assets/images/ads-received-share-view-history.png)
 
