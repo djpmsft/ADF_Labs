@@ -158,25 +158,26 @@ Now that you have moved the data into ADLS, you are ready to build a Mapping Dat
 
     ![Upsert](./assets/MovieAnalytics/AlterRow.PNG "Upsert")
 
-1. **Write to a SQL DW Sink** Now that you have finished all your transformation logic, you are ready to write to a Sink.
+1. **Write to a SQL DB Sink** Now that you have finished all your transformation logic, you are ready to write to a Sink.
     1. Add a Sink by clicking on the + icon next to your Upsert transformation and clicking Sink under Destination.
-    1. In the Sink tab, create a new SQL DW dataset via the + New button.
+    1. In the Sink tab, create a new SQL DB dataset via the + New button.
     ![Data Flow](./assets/MovieAnalytics/dataflow6.png)
-    1. Select Azure SQL Data Warehouse from the tile list.
+    1. Select Azure SQL Data Database from the tile list.
     ![Data Flow](./assets/MovieAnalytics/dataflow7.png)
-    1. Select a new linked service and configure your SQL DW connection credentials. Click 'Create' when finished.
+    1. Select a new linked service and configure your SQL DB connection credentials. Click 'Create' when finished.
     ![Data Flow](./assets/MovieAnalytics/dataflow8.png)
     1. In the dataset configuration, select 'Create new table' and enter in your desired table name. Click 'Finish' once completed.
     ![Data Flow](./assets/MovieAnalytics/dataflow9.png)
     1. Since an upsert condition was specified, you need to go to the Settings tab and select 'Allow upsert' based on key columns PrimaryGenre and year.
     ![Sink](./assets/MovieAnalytics/Sink.PNG "Sink")
+
 At this point, You have finished building your 8 transformation Mapping Data Flow. It's time to run the pipeline and see the results!
 
 ![Data Flow Canvas](./assets/MovieAnalytics/DataFlowCanvas.PNG "Data Flow Canvas")
 
 ## Running the Pipeline
 
-Go to the pipeline canvas. Because SQL DW in Data Flow uses [PolyBase](https://docs.microsoft.com/sql/relational-databases/polybase/polybase-guide?view=sql-server-2017), you must specify a blob or ADLS staging folder. In the Execute Data Flow activity's settings tab, open up the PolyBase accordion and select your ADLS linked service and specify a staging folder path.
+Go to the pipeline canvas. In the Execute Data Flow activity's settings tab, you will see the data flow selected and the compute environment used. In this lab, you should use the default 4 core general purpose cluster. 
 
 ![Data Flow](./assets/MovieAnalytics/pipeline1.png)
 
@@ -184,8 +185,10 @@ Before you publish your pipeline, run another debug run to confirm it's working 
 
 ![Full Debug](./assets/MovieAnalytics/FullDebug.PNG "Full Debug")
 
-Once both activities succeeded, you can click on the eyeglasses icon next to the Data Flow activity to get a more in depth look at the Data Flow run.
+You can click on the eyeglasses icon next to the Data Flow activity to get a more in depth look at the Data Flow run. The data flow activity should complete in about one minute.
 
 ![Data Flow Monitoring](./assets/MovieAnalytics/DataFlowMonitoring.PNG "Data Flow monitoring")
 
 If you used the same logic described in this lab, your Data Flow should will written 737 rows to your SQL DW. You can go into [SQL Server Management Studio](https://docs.microsoft.com/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017) to verify the pipeline worked correctly and see what got written.
+
+Once you verify your pipeline is working, publish your changes! Feel free to continue to play around with Azure Data Factory and build your code-free ETL work flows.
