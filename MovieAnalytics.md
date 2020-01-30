@@ -2,7 +2,9 @@
 
 *If you're new to Azure Data Factory, see [Introduction to Azure Data Factory](https://docs.microsoft.com/azure/data-factory/introduction).*
 
-In this Lab, you will utilize Azure Data Factory's visual authoring experience to create a pipeline that copies movie data stored in Amazon S3 to Azure Data Lake Storage Gen2 and then executes a Mapping Data Flow to transform and write the data to a SQL Data Warehouse. If a S3 instance is not available, this lab can also be done by querying the data via a HTTP request.
+In this Lab, you will utilize Azure Data Factory's visual authoring experience to create a pipeline that copies movie data stored in GitHub repository to Azure Data Lake Storage Gen2 and then executes a Mapping Data Flow to transform and write the data to a Azure SQL Database.
+
+The patterns used in this lab are examples of a modern data warehouse ingestion and transformation scenario using Azure Data Factory.
 
 The pipeline created in this lab is available via the Azure Data Factory [Template Gallery](https://azure.microsoft.com/blog/get-started-quickly-using-templates-in-azure-data-factory/) under the name **Movie Analytics**
 
