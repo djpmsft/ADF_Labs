@@ -2,7 +2,7 @@
 
 As customers embark on their modern data warehouse and analytics projects, they require not only more data but also more visibility into their data across their data estate. This workshop dives into how improvements to Azure Data Factory and Azure Data Share simplify data integration and management in Azure. From enabling code-free ETL/ELT to creating a comprehensive view over your data, improvements in Azure Data Factory will empower your data engineers to confidently bring in more data, and thus more value, to your enterprise. Also, learn about Azure Data Share and how you can do B2B sharing in a governed manner.
 
-In this workshop, you will use Azure Data Share to receive data from a third party Azure SQL database (SQL DB) into your Azure Data Lake Storage Gen2 (ADLS Gen2). You will use Azure Data Factory (ADF) to ingest data from your own SQL DB into ADLS Gen2. You will then integrate and transform both third party and your own data via mapping data flows, data factory's native transformation service, and sink it into Azure Synapse Analytics (formerly SQL DW). 
+In this workshop, you will use Azure Data Share to receive data from a third party Azure SQL database (SQL DB) into your Azure Data Lake Storage Gen2 (ADLS Gen2). You will use Azure Data Factory (ADF) to ingest data from your own SQL DB into ADLS Gen2. Once both datasets are in the data lake, you will join and transform them using a mapping data flow, data factory's native transformation service, and sink it into Azure Synapse Analytics (formerly SQL DW).
 
 The data used in this lab is New York City taxi data. To import it into your Azure SQL database, download the [taxi-data bacpac file](https://github.com/djpmsft/ADF_Labs/blob/master/sample-data/taxi-data.bacpac).
 
@@ -11,7 +11,10 @@ The data used in this lab is New York City taxi data. To import it into your Azu
 - [Share and receive data using Azure Data Share](#share-and-receive-data-using-azure-data-share)
   * [Share data (data provider flow)](#share-data-data-provider-flow)
   * [Receive data (data consumer flow)](#receive-data-data-consumer-flow)
-- [Set up your Azure Data Factory environment](#set-up-your-azure-data-factory-environment) 
+- [Ingest and transform data using Azure Data Factory](ingest-and-transform-data-using-azure-data-factory)
+  * [Set up your Azure Data Factory environment](#set-up-your-azure-data-factory-environment)
+  * [Ingest data from using the copy activity](#ingest-data-from-azure-sql-db-into-adls-gen2-using-the-copy-activity)
+  * [Transform data using mapping data flow](#transform-data-using-mapping-data-flow)
 
 ## Prerequisites
 
@@ -189,6 +192,10 @@ Now you are switching hat to be the data consumer. As a data consumer, you will 
 
 This concludes the Azure Data Share portion of the lab. In the next section, you will use Azure Data Factory to process the received data.
 
+## Ingest and transform data using Azure Data Factory
+
+Now that you have consumed data using Azure Data Share, it is time to ingest the corresponding dataset and then transform the data using Azure Data Factory.
+
 ## Set up your Azure Data Factory environment
 
 In this section, you will learn how to access the Azure Data Factory user experience (ADF UX) from the Azure portal. Once in the ADF UX, you will configure three linked service for each of the data stores we are using: Azure SQL DB, ADLS Gen2, and Azure Synapse Analytics.
@@ -318,7 +325,7 @@ You have successfully created your source dataset. Make sure in the source setti
 
 Now that you have successfully copied data into Azure Data Lake Storage, it is time to join and aggregate that data into a data warehouse. We will use mapping data flow, Azure Data Factory's visually designed transformation service. Mapping data flows allow users to develop transformation logic code-free and execute them on spark clusters managed by the ADF service.
 
-The data flow created in this step inner joins the 'TripDataCSV' dataset created in the previous section with a table 'dbo.TripFares' stored in 'SQLDB' based on four key columns. Then the data gets aggregated based upon column `payment_type` to calculate the average of certain fields and written in a Azure Synapse Analytics table.
+The data flow created in this step inner joins the 'TripDataCSV' dataset created in the previous section with the 'TripFares.csv' file shared via Azure Data Share. based on four key columns. Then the data gets aggregated based upon column `payment_type` to calculate the average of certain fields and written in a Azure Synapse Analytics table.
 
 ### Add a data flow activity to your pipeline
 
@@ -347,23 +354,25 @@ The data flow created in this step inner joins the 'TripDataCSV' dataset created
 
     ![Portal](./assets/images/dataflow7.png)
 
-*Note: Data preview does not write data.*
+    *Note: Data preview does not write data.*
 
-### Configure your trip fares SQL DB source
+### Configure your trip fares csv source
 
-1. The second source you're adding will point at the SQL DB table 'dbo.TripFares'. Under your 'TripDataCSV' source, there will be another **Add Source** box. Click it to add a new source transformation.
+1. The second source you're adding will point at the csv file 'TripFares.csv' that was shared during the Azure Data Share portion of the lab. Under your 'TripDataCSV' source, there will be another **Add Source** box. Click it to add a new source transformation.
 
     ![Portal](./assets/images/dataflow8.png)
-1. Name this source 'TripFaresSQL'. Click **New** next to the source dataset field to create a new SQL DB dataset.
+1. Name this source 'TripFaresCSV'. Click **New** next to the source dataset field to create a new ADLS gen2 dataset.
 
     ![Portal](./assets/images/dataflow9.png)
-1. Select the **Azure SQL Database** tile and click continue. *Note: You may notice many of the connectors in data factory are not supported in mapping data flow. To transform data from one of these sources, ingest it into a supported source using the copy activity*.
+1. Select the **Azure Data Lake Storage gen2** tile and click continue.
+
+    *Note: You may notice many of the connectors in data factory are not supported in mapping data flow. To transform data from one of these sources, ingest it into a supported source using the copy activity*.
 
     ![Portal](./assets/images/dataflow10.png)
-1. Call your dataset 'TripFares'. Select 'SQLDB' as your linked service. Select table name 'dbo.TripFares' from the table name dropdown. Import the schema **From connection/store**. Click OK when finished.
+1. Name your sink dataset 'TripFaresCSV'. Select 'ADLSGen2' as your linked service. Point this at the file shared in the Data Share lab. It should be called `TripFares.csv` in container `taxi-data`. Set **First row as header** to true as the input data has headers. Import the schema **From connection/store**. Click OK when finished.
 
     ![Portal](./assets/images/dataflow11.png)
-1. To verify your data, fetch a data preview in the **Data Preview** tab.
+1. To verify your source is configured correctly, fetch a data preview in the **Data Preview** tab.
 
     ![Portal](./assets/images/dataflow12.png)
 
@@ -372,7 +381,7 @@ The data flow created in this step inner joins the 'TripDataCSV' dataset created
 1. To add a new transformation, click the plus icon in the bottom-right corner of 'TripDataCSV'. Under **Multiple inputs/outputs**, select **Join**.
 
     ![Portal](./assets/images/join1.png)
-1. Name your join transformation 'InnerJoinWithTripFares'. Select 'TripFaresSQL' from the right stream dropdown. Select **Inner** as the join type. To learn more about the different join types in mapping data flow, see [join types](https://docs.microsoft.com/azure/data-factory/data-flow-join#join-types).
+1. Name your join transformation 'InnerJoinWithTripFares'. Select 'TripFaresCSV' from the right stream dropdown. Select **Inner** as the join type. To learn more about the different join types in mapping data flow, see [join types](https://docs.microsoft.com/azure/data-factory/data-flow-join#join-types).
 
     Select which columns you wish to match on from each stream via the **Join conditions** dropdown. To add an additional join condition, click on the plus icon next to an existing condition. By default, all join conditions are combined with an AND operator which means all conditions must be met for a match. In this lab, we want to match on columns `medallion`, `hack_license`, `vendor_id`, and `pickup_datetime`
 
@@ -452,9 +461,20 @@ You have successfully created your data flow. Now its time to run it in a pipeli
 
     ![Portal](./assets/images/pipeline5.png)
 
-You have now completed the data factory portion of this lab. Publish your resources if you wish to operationalize them with triggers. You successfully ran a pipeline that ingested data from Azure SQL Database to Azure Data Lake Storage using the copy activity and then aggregated that data into an Azure Synapse Analytics. You can verify the data was successfully written by looking at the SQL Server itself.
+### Publish your changes to the data factory service and run a trigger run
 
-Congratulations, you have reached the end of the lab. 
+1. Now that you verified your pipeline run works end-to-end in a debug/sandbox environment, you are ready to publish it against the data factory service. Click **Publish all** to publish your changes. ADF will first run a validation check to make sure all of your resources meet our service requirements. If you receive a failure, a side panel will appear detailing the error.
 
+1. Once you have successfully published your pipeline, you can trigger a pipeline run against the data factory service by clicking **Add trigger**. 
 
+1. When the trigger menu appears, select **Trigger now**. This will kick off a manual one-time pipeline run. This menu is also where you set up recurring schedule and event-based triggers operationalize your pipeline.
 
+1. You can monitor a trigger run by selecting the monitoring icon in left side-bar. By default, Azure Data Factory keeps pipeline run information for 45 days. To persist these metrics for longer, configure your data factory with Azure Monitor.
+
+1. Click on the name of the pipeline you triggered to open up more details on the activity information. Here, you can see details of the pipeline run as you did with the debug run. 
+    
+    *Note: Triggered data flows spin up a just-in-time Spark cluster which is terminated once the job is concluded. As a result, each data flow activity run will endure 5-7 minutes of cluster start-up time.*
+
+You have now completed the data factory portion of this lab. You successfully ran a pipeline that ingested data from Azure SQL Database to Azure Data Lake Storage using the copy activity and then aggregated that data into an Azure Synapse Analytics. You can verify the data was successfully written by looking at the SQL Server itself.
+
+Congratulations, you have reached the end of the lab!
