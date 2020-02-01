@@ -344,7 +344,7 @@ The data flow created in this step inner joins the 'TripDataCSV' dataset created
 1. The first thing you want to do is configure your two source transformations. The first source will point to the 'TripDataCSV' DelimitedText dataset. To add a source transformation, click on the **Add Source** box in the canvas.
 
     ![Portal](./assets/images/dataflow4.png)
-1. Name your source 'TripDataCSV' and select the 'TripDataCSV' dataset from the source drop-down. If you remember, you didn't import a schema initially when creating this dataset as there was no data there. Since `trip-data.csv` exists now, click **Edit** to go to the dataset settings tab.
+1. Name your source 'TripDataCSV' and select the 'TripDataCSV' dataset from the source drop-down. If you remember, you didn't import a schema initially when creating this dataset as there was no data there. Since `trip-data.csv` exists now, click **Open** to go to the dataset settings tab.
 
     ![Portal](./assets/images/dataflow5.png)
 1. Go to tab **Schema** and click **Import schema**. Select **From connection/store** to import directly from the file store. Fourteen columns of type string should appear.
@@ -369,7 +369,11 @@ The data flow created in this step inner joins the 'TripDataCSV' dataset created
     *Note: You may notice many of the connectors in data factory are not supported in mapping data flow. To transform data from one of these sources, ingest it into a supported source using the copy activity*.
 
     ![Portal](./assets/images/dataflow10.png)
-1. Name your sink dataset 'TripFaresCSV'. Select 'ADLSGen2' as your linked service. Point this at the file shared in the Data Share lab. It should be called `TripFares.csv` in container `taxi-data`. Set **First row as header** to true as the input data has headers. Import the schema **From connection/store**. Click OK when finished.
+
+1. In the select format pane, select **DelimitedText** as you are reading from a csv file. Click continue.
+
+    ![Portal](./assets/images/dataflow13.png)
+1. Name your dataset 'TripFaresCSV'. Select 'ADLSGen2' as your linked service. Point this at the file shared in the Data Share lab. It should be called `TripFares.csv` in container `taxi-data`. Set **First row as header** to true as the input data has headers. Import the schema **From connection/store**. Click OK when finished.
 
     ![Portal](./assets/images/dataflow11.png)
 1. To verify your source is configured correctly, fetch a data preview in the **Data Preview** tab.
