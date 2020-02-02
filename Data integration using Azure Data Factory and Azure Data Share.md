@@ -433,17 +433,17 @@ The data flow created in this step inner joins the 'TripDataCSV' dataset created
 1. Now that we have finished our transformation logic, we are ready to sink our data in an Azure Synapse Analytics table. Add a sink transformation under the **Destination** section.
 
     ![Portal](./assets/images/sink1.png)
-1. Name your sink 'SQLDWSink'. Click **New** next to the sink dataset field to create a new Azure Synapse Analytics dataset.
+1. Name your sink 'SynapseSink'. Click **New** next to the sink dataset field to create a new Azure Synapse Analytics dataset.
 
     ![Portal](./assets/images/sink2.png)
 
 1. Select the **Azure Synapse Analytics (formerly SQL DW)** tile and click continue.
 
     ![Portal](./assets/images/sink3.png)
-1. Call your dataset 'AggregatedTaxiData'. Select 'SQLDW' as your linked service. Select **Create new table** and name the new table dbo.AggregateTaxiData. Click OK when finished
+1. Call your dataset 'AggregatedTaxiData'. Select 'Synapse' as your linked service. Select **Create new table** and name the new table dbo.AggregateTaxiData. Click OK when finished
 
     ![Portal](./assets/images/sink4.png)
-1. Go to the **Settings** tab of the sink. Since we are creating a new table, we need to select **Recreate table** under table action. Unselect **Enable staging** which toggles whether we are inserting row-by-row or in batch.
+1. Go to the **Settings** tab of the sink. Since we are creating a new table, we need to select **Recreate table** under table action. Select **Enable staging** which toggles whether we are inserting row-by-row or in batch using PolyBase.
 
     ![Portal](./assets/images/sink5.png)
 
