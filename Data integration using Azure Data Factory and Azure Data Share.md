@@ -238,7 +238,7 @@ In Azure Data Factory, linked services define the connection information to exte
 1. Repeat the same process to add an Azure Synapse Analytics linked service. In the connections tab, click **New**. Select the **Azure Synapse Analytics (formerly SQL DW)** tile and click continue.
 
     ![Portal](./assets/images/configure6.png)
-1. In the linked service configuration pane, enter 'SQLDW' as your linked service name. Enter in your credentials to allow data factory to connect to your database. If you're using SQL authentication, enter in the server name, the database, your user name and password. You can verify your connection information is correct by clicking **Test connection**. Click **Create** when finished.
+1. In the linked service configuration pane, enter 'Synapse' as your linked service name. Enter in your credentials to allow data factory to connect to your database. If you're using SQL authentication, enter in the server name, the database, your user name and password. You can verify your connection information is correct by clicking **Test connection**. Click **Create** when finished.
 
     ![Portal](./assets/images/configure7.png)
 
@@ -443,18 +443,23 @@ The data flow created in this step inner joins the 'TripDataCSV' dataset created
 1. Call your dataset 'AggregatedTaxiData'. Select 'Synapse' as your linked service. Select **Create new table** and name the new table dbo.AggregateTaxiData. Click OK when finished
 
     ![Portal](./assets/images/sink4.png)
-1. Go to the **Settings** tab of the sink. Since we are creating a new table, we need to select **Recreate table** under table action. Select **Enable staging** which toggles whether we are inserting row-by-row or in batch using PolyBase.
+1. After creating your dataset, there are no further changes you need to make your sink! In the **Settings** tab, you will notice that by default the only update method selected is **Allow insert** which means all rows will be inserted to the table. In conjunction with an alter row transformation, you can tag certain rows as delete, upsert, or update as well. **Enable staging** is also enabled by default which allows for the data flow to utilize Synapse's PolyBase technology for performant loading.
 
     ![Portal](./assets/images/sink5.png)
 
-You have successfully created your data flow. Now its time to run it in a pipeline activity.
+You have successfully created your data flow. Now its time to operationalize it in our pipeline.
 
 ### Debug your pipeline end-to-end
 
 1. Go back to the tab for the **IngestAndTransformData** pipeline. Notice the green box on the 'IngestIntoADLS' copy activity. Drag it over to the 'JoinAndAggregateData' data flow activity. This creates an 'on success' which causes the data flow activity to only run if the copy is successful.
 
     ![Portal](./assets/images/pipeline1.png)
+1. Since we are using PolyBase to write to data warehouse, we need to specify a staging location in data lake storage. In the **Settings** tab of the mapping data flow activity, expand the PolyBase accordion. Select 'ADLSGen2' for the staging linked service. Choose 'sample-data' for your staging container and 'staging' for your staging directory. By default, the data flow is ran on an 8 core general purpose Integration runtime.
+
+    ![Portal](./assets/images/pipeline6.png)
 1. As we did for the copy activity, click **Debug** to execute a debug run. For debug runs, the data flow activity will use the active debug cluster instead of spinning up a new cluster. This pipeline will take a little over a minute to execute.
+
+    *Note: A debug pipeline run including a data flow will re-use the existing debug cluster. It will not use your integration runtime configuration to spin up a new cluster*.
 
     ![Portal](./assets/images/pipeline2.png)
 1. Like the copy activity, the data flow has a special monitoring view accessed by the eyeglasses icon on completion of the activity.
@@ -471,16 +476,27 @@ You have successfully created your data flow. Now its time to run it in a pipeli
 
 1. Now that you verified your pipeline run works end-to-end in a debug/sandbox environment, you are ready to publish it against the data factory service. Click **Publish all** to publish your changes. ADF will first run a validation check to make sure all of your resources meet our service requirements. If you receive a failure, a side panel will appear detailing the error.
 
+    ![Portal](./assets/images/publish2.png)
 1. Once you have successfully published your pipeline, you can trigger a pipeline run against the data factory service by clicking **Add trigger**. 
 
+    ![Portal](./assets/images/trigger1.png)
 1. When the trigger menu appears, select **Trigger now**. This will kick off a manual one-time pipeline run. This menu is also where you set up recurring schedule and event-based triggers operationalize your pipeline.
 
+    ![Portal](./assets/images/trigger2.png)
+1. A side panel will appear prompting you to specify parameters. As no parameters have been added, click **Finish** to execute the pipeline.
+
+    ![Portal](./assets/images/trigger3.png)
 1. You can monitor a trigger run by selecting the monitoring icon in left side-bar. By default, Azure Data Factory keeps pipeline run information for 45 days. To persist these metrics for longer, configure your data factory with Azure Monitor.
 
-1. Click on the name of the pipeline you triggered to open up more details on the activity information. Here, you can see details of the pipeline run as you did with the debug run. 
-    
+    ![Portal](./assets/images/trigger4.png)
+1. Click on the name of the pipeline you triggered to open up more details on invidual activity runs.
+
+    ![Portal](./assets/images/trigger5.png)
+1. In the activity runs view, you can see details of the pipeline run as you did with the debug run. 
+
     *Note: Triggered data flows spin up a just-in-time Spark cluster which is terminated once the job is concluded. As a result, each data flow activity run will endure 5-7 minutes of cluster start-up time.*
 
+    ![Portal](./assets/images/trigger6.png)
 You have now completed the data factory portion of this lab. You successfully ran a pipeline that ingested data from Azure SQL Database to Azure Data Lake Storage using the copy activity and then aggregated that data into an Azure Synapse Analytics. You can verify the data was successfully written by looking at the SQL Server itself.
 
 Congratulations, you have reached the end of the lab!
