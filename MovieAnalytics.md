@@ -49,7 +49,8 @@ Once your data factory is created and you open the ADF UX, the first step in you
 1. **Create the pipeline** Click on the + button in the Factory Resources pane and select Pipeline
     ![Authoring](./assets/MovieAnalytics/authoring2.png)
 1. **Add a copy activity** In the Activities pane, open the Move and Transform accordion and drag the Copy Data activity onto the pipeline canvas
-    ![Authoring](./assets/MovieAnalytics/authoring3.png)k 'Preview Data' in the Source tab of the copy activity to get a small snapshot of your data.
+    ![Authoring](./assets/MovieAnalytics/authoring3.png)
+    Click 'Preview Data' in the Source tab of the copy activity to get a small snapshot of your data.
     ![Authoring](./assets/MovieAnalytics/authoring13.png)
 1. **Create a new HTTP dataset to use as a source**
     1. In the Source tab of the Copy activity settings, click '+ New'
