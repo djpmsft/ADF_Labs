@@ -221,31 +221,31 @@ Now that you have moved the data into ADLS, you are ready to build a Mapping Dat
 
 1. **Write to a Synapse Analytics SQL Pool** Once you have finished your transformation logic, you are ready to write to your sink. In this lab, you are going to create a new Synapse Analytics SQL Pool. To add a sink, click on the + icon next to your Aggregate transformation and select Sink.
 
-    ![derive](./assets/MovieAnalytics/synapse-sink1.png "derive")
+    ![derive](./assets/MovieAnalytics/synapse-sink1.PNG "derive")
 
     Name your sink `SynapseSink` and select a new dataset.
 
-    ![derive](./assets/MovieAnalytics/synapse-sink2.png "derive")
+    ![derive](./assets/MovieAnalytics/synapse-sink2.PNG "derive")
 
     Select the Azure Synapse Analytics tile.
 
-    ![derive](./assets/MovieAnalytics/synapse-sink3.png "derive")
+    ![derive](./assets/MovieAnalytics/synapse-sink3.PNG "derive")
 
     Name your dataset `SynapseSink` and select a new linked service.
 
-    ![derive](./assets/MovieAnalytics/synapse-sink4.png "derive")
+    ![derive](./assets/MovieAnalytics/synapse-sink4.PNG "derive")
 
     Name your linked service `Synapse` and enter in your credentials. The below example uses SQL authentication. Click OK when finished.
 
-    ![derive](./assets/MovieAnalytics/synapse-sink5.png "derive")
+    ![derive](./assets/MovieAnalytics/synapse-sink5.PNG "derive")
 
     In the Set properties pane, select **Create new table**. Enter in `dbo` for your schema name and `MovieAnalytics` for your table name. Click OK when finished.
 
-    ![derive](./assets/MovieAnalytics/synapse-sink6.png "derive")
+    ![derive](./assets/MovieAnalytics/synapse-sink6.PNG "derive")
 
     Your Synapse sink is now fully configured.
 
-    ![derive](./assets/MovieAnalytics/synapse-sink6.png "derive")
+    ![derive](./assets/MovieAnalytics/synapse-sink7.PNG "derive")
 
 At this point, You have finished building your 7 transformation Mapping Data Flow. It's time to run the pipeline and see the results!
 
