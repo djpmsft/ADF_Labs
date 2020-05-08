@@ -16,7 +16,7 @@ Please allot about two hours to complete this lab end to end.
 
 * **Azure Data Lake Storage Gen2 storage account**: If you don't have an ADLS Gen2 storage account, see the instructions in [Create an ADLS Gen2 storage account](https://docs.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-quickstart-create-account).
 
-* **Azure Synapse Analytics SQL Pool**: If you don't have a SQL DB account, see the instructions in [Create a Synapse SQL pool](https://docs.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/create-data-warehouse-portal).
+* **Azure Synapse Analytics SQL Pool**: If you don't have a Synapse SQL Pool, see the instructions in [Create a Synapse SQL pool](https://docs.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/create-data-warehouse-portal).
 
 ## Setting up your environment
 
