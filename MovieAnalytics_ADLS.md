@@ -152,19 +152,19 @@ Now that you have moved the data into ADLS, you are ready to build a Mapping Dat
 
 1. **Add a Derive Transformation to calculate primary genre** As you may have noticed, the genres column is a string delimited by a '|' character. If you only care about the first genre in each column, you can derive a new column via the [Derived Column](https://docs.microsoft.com/azure/data-factory/data-flow-derived-column) transformation by clicking on the + icon next to your Filter transformation and choosing derived column under Schema Modifier.
 
-    ![derive](./assets/MovieAnalytics/derive-settings.png "derive")
+    ![derive](./assets/MovieAnalytics/derive-settings.PNG "derive")
 
     Name your transformation `DerivePrimaryGere. Similar to the filter transformation, the derived column uses the Mapping Data Flow expression builder to specify column values. In the left textbox selector, enter **Primary Genre**. Click on the expression box to assign the new column a value. The expression builder will open.
 
-    ![derive](./assets/MovieAnalytics/derive-settings2.png "derive")
+    ![derive](./assets/MovieAnalytics/derive-settings2.PNG "derive")
 
     In this scenario, you are trying to extract the first genre from the genres column which is formatted as 'genre1|genre2|...|genreN'. While there are a variety of ways to do this, one way is using the `split()` which converts a delimited string into an array. `split()` takes in two parameters, the string to split and the delimiter. In this case, the string is the column `genres` and the delimiter is the character `'|'`. We are only interested in the first element of the output array which can be accessed using bracket notation, `[1]`. The finished expression is `split(genres, '|')[1]`.
 
-    ![derive](./assets/MovieAnalytics/derive-settings3.png "derive")
+    ![derive](./assets/MovieAnalytics/derive-settings3.PNG "derive")
 
     As we did in filter, use data preview to confirm the output of the expression.
 
-    ![derive](./assets/MovieAnalytics/derive-settings4.png "derive")
+    ![derive](./assets/MovieAnalytics/derive-settings4.PNG "derive")
 
     Click **Save and finish** when complete.
 
